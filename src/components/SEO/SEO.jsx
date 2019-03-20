@@ -10,11 +10,16 @@ class SEO extends Component {
 		let description;
 		let image;
 		let postURL;
+
+		let image = config.siteLogo;
+
 		if (postSEO) {
 			const postMeta = postNode.frontmatter;
 			({ title } = postMeta);
 			description = postMeta.description ? postMeta.description : postNode.excerpt;
-			image = postMeta.cover;
+			if (Object.prototype.hasOwnProperty.call(postMeta, 'cover')) {
+				image = postMeta.cover;
+			}
 			postURL = urljoin(config.siteUrl, config.pathPrefix, postPath);
 		} else {
 			title = config.siteTitle;
