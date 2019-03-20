@@ -9,12 +9,12 @@ export default class CategoryTemplate extends React.Component {
 	render() {
 		const { pageContext, data } = this.props;
 		const { category } = pageContext;
-		const { postEdges } = data.allMdx.edges;
+		const { edges } = data.allMdx;
 		return (
   <Layout>
     <div className="category-container">
       <Helmet title={`Posts in category "${category}" | ${config.siteTitle}`} />
-      <PostListing postEdges={postEdges} />
+      <PostListing postEdges={edges} />
     </div>
   </Layout>
 		);

@@ -9,12 +9,12 @@ export default class TagTemplate extends React.Component {
 	render() {
 		const { pageContext, data } = this.props;
 		const { tag } = pageContext;
-		const { postEdges } = data.allMdx.edges;
+		const { edges } = data.allMdx;
 		return (
   <Layout>
     <div className="tag-container">
       <Helmet title={`Posts tagged as "${tag}" | ${config.siteTitle}`} />
-      <PostListing postEdges={postEdges} />
+      <PostListing postEdges={edges} />
     </div>
   </Layout>
 		);
