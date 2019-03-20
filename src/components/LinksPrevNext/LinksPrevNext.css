@@ -1,0 +1,19 @@
+.pnlinks-grid-container {
+	border-top: 1px #ccc solid;
+	border-bottom: 1px #ccc solid;
+	/* margin-top: 20px;
+	padding-bottom: 20px; */
+	display: grid;
+	grid-template-columns: auto auto;
+	/* grid-template-columns: 1fr 4fr; */
+	padding: 20px 0px 20px 0px;
+	grid-gap: 10px;
+}
+
+.pnlinks-grid-item {
+	/* text-align: left; */
+}
+
+.pnlinks-grid-item-right {
+	text-align: right;
+}

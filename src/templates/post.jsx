@@ -6,6 +6,7 @@ import Layout from '../layout';
 import UserInfo from '../components/UserInfo/UserInfo';
 import Disqus from '../components/Disqus/Disqus';
 import PostTags from '../components/PostTags/PostTags';
+import LinksPrevNext from '../components/LinksPrevNext/LinksPrevNext';
 import SocialLinks from '../components/SocialLinks/SocialLinks';
 import SEO from '../components/SEO/SEO';
 import config from '../../data/SiteConfig';
@@ -14,9 +15,9 @@ import './post.css';
 
 export default class PostTemplate extends React.Component {
 	render() {
-        const { pageContext, data } = this.props;
-        const { slug, next, prev } = pageContext;
-        const { site, mdx } = data;
+		const { pageContext, data } = this.props;
+		const { slug, next, prev } = pageContext;
+		const { site, mdx } = data;
 		const post = mdx.frontmatter;
 		if (!post.id) {
 			post.id = slug;
@@ -38,21 +39,8 @@ export default class PostTemplate extends React.Component {
         {/* <div dangerouslySetInnerHTML={{ __html: postNode.html }} /> */}
         <div className="post-meta">
           <PostTags tags={post.tags} />
-          {prev && (
-          <span>
-          Previous
-            {' '}
-            <Link to={prev.fields.slug}>{prev.fields.title}</Link>
-          </span>
-          )}
-          {next && (
-          <span>
-          Next
-            {' '}
-            <Link to={next.fields.slug}>{next.fields.title}</Link>
-          </span>
-          )}
           <SocialLinks postPath={slug} postNode={mdx} />
+          <LinksPrevNext prev={prev} next={next} />
         </div>
         <UserInfo config={config} />
         <Disqus postNode={mdx} />
