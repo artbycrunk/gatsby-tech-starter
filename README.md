@@ -167,5 +167,3 @@ module.exports = {
   pathPrefix: "/gatsby-advanced-starter" // Prefixes all links. For cases when deployed to example.github.io/gatsby-advanced-starter/.
 };
 ```
-
-WARNING: Make sure to edit `static/robots.txt` to include your domain for the sitemap!
