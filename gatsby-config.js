@@ -154,7 +154,9 @@ module.exports = {
                 edges {
                   node {
                     excerpt
-                    html
+                    code {
+											scope
+										}
                     timeToRead
                     fields {
                       slug
