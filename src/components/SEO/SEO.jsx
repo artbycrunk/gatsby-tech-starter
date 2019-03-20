@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
-import urljoin from 'url-join';
 import config from '../../../data/SiteConfig';
+import common from '../../../data/common';
 
 class SEO extends Component {
 	render() {
 		const { postNode, postPath, postSEO } = this.props;
 		let title;
 		let description;
-		let image;
 		let postURL;
 
 		let image = config.siteLogo;
@@ -20,15 +19,14 @@ class SEO extends Component {
 			if (Object.prototype.hasOwnProperty.call(postMeta, 'cover')) {
 				image = postMeta.cover;
 			}
-			postURL = urljoin(config.siteUrl, config.pathPrefix, postPath);
+			postURL = common.postURL(postPath);
 		} else {
 			title = config.siteTitle;
 			description = config.siteDescription;
-			image = config.siteLogo;
 		}
 
-		image = urljoin(config.siteUrl, config.pathPrefix, image);
-		const blogURL = urljoin(config.siteUrl, config.pathPrefix);
+		image = common.imageURL(image);
+		const blogURL = common.baseURL();
 		const schemaOrgJSONLD = [
 			{
 				'@context': 'http://schema.org',

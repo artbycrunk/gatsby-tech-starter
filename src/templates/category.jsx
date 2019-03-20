@@ -4,6 +4,7 @@ import { graphql } from 'gatsby';
 import Layout from '../layout';
 import PostListing from '../components/PostListing/PostListing';
 import config from '../../data/SiteConfig';
+import common from '../../data/common';
 
 export default class CategoryTemplate extends React.Component {
 	render() {
@@ -12,8 +13,8 @@ export default class CategoryTemplate extends React.Component {
 		const { edges } = data.allMdx;
 		return (
   <Layout>
-    <div className="category-container">
-      <Helmet title={`Posts in category "${category}" | ${config.siteTitle}`} />
+    <div className="content container category-container">
+      <Helmet title={`${common.capitalizeFirstLetter(category)} | ${config.siteTitle}`} />
       <PostListing postEdges={edges} />
     </div>
   </Layout>

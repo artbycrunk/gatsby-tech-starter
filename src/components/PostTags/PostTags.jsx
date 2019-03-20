@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import { Link } from 'gatsby';
+import common from '../../../data/common';
 
 class PostTags extends Component {
 	render() {
@@ -9,8 +10,8 @@ class PostTags extends Component {
   <div className="post-tag-container">
     {tags &&
 					tags.map(tag => (
-  <Link key={tag} style={{ textDecoration: 'none' }} to={`/tags/${_.kebabCase(tag)}`}>
-    <button>{tag}</button>
+  <Link className="tag_link" key={tag} to={`/tags/${_.kebabCase(tag)}`}>
+    {common.capitalizeFirstLetter(tag)}
   </Link>
 					))}
   </div>

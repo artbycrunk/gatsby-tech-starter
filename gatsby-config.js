@@ -1,16 +1,16 @@
-const urljoin = require('url-join');
+const common = require('./data/common');
 const config = require('./data/SiteConfig');
 
 module.exports = {
 	pathPrefix: config.pathPrefix,
 	siteMetadata: {
-		siteUrl: urljoin(config.siteUrl, config.pathPrefix),
+		siteUrl: common.baseURL(),
 		rssMetadata: {
-			site_url: urljoin(config.siteUrl, config.pathPrefix),
-			feed_url: urljoin(config.siteUrl, config.pathPrefix, config.siteRss),
+			site_url: common.baseURL(),
+			feed_url: common.feedURL(),
 			title: config.siteTitle,
 			description: config.siteDescription,
-			image_url: `${urljoin(config.siteUrl, config.pathPrefix)}/logos/logo-512.png`,
+			image_url: `${common.baseURL()}/logos/logo-512.png`,
 			author: config.userName,
 			copyright: config.copyright
 		}
@@ -124,7 +124,6 @@ module.exports = {
 				setup(ref) {
 					const ret = ref.query.site.siteMetadata.rssMetadata;
 					ret.allMdx = ref.query.allMdx;
-					ret.generator = 'GatsbyJS Material Starter';
 					return ret;
 				},
 				query: `
@@ -178,7 +177,6 @@ module.exports = {
                     }
                     frontmatter {
                       title
-                      cover
                       date
                       category
                       tags
