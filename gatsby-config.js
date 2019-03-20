@@ -33,6 +33,9 @@ module.exports = {
 			}
 		},
 		{
+			resolve: `gatsby-plugin-sass`
+		},
+		{
 			resolve: `gatsby-mdx`,
 			options: {
 				extensions: ['.mdx', '.md'],

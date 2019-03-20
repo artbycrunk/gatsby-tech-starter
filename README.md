@@ -35,6 +35,7 @@ If you are interested in a foundation for building ultra-fast websites, you can 
 - Gatsby v2 support
 - Blazing fast loading times thanks to pre-rendered HTML and automatic chunk loading of JS files
 - Separate components for everything
+- SASS/SCSS styling
 - High configurability:
   - User information
   - User social profiles
@@ -50,10 +51,8 @@ If you are interested in a foundation for building ultra-fast websites, you can 
   - Code syntax highlighting
   - Embed YouTube videos
   - Embed Tweets
-- Tags
-  - Separate page for posts under each tag
-- Categories
-  - Separate page for posts under each category
+- Tags / Categories
+  - Separate page for posts under each tag / category
 - Disqus support
   - Notifications about new disqus comments
 - Google Analytics support
