@@ -8,7 +8,8 @@ import config from '../../data/SiteConfig';
 
 class Index extends React.Component {
 	render() {
-		const postEdges = this.props.data.allMarkdownRemark.edges;
+		const { data } = this.props;
+		const postEdges = data.allMdx.edges;
 		return (
   <Layout>
     <div className="index-container">
@@ -25,8 +26,8 @@ export default Index;
 
 /* eslint no-undef: "off" */
 export const pageQuery = graphql`
-	query IndexQuery {
-		allMarkdownRemark(limit: 2000, sort: { fields: [fields___date], order: DESC }) {
+	query {
+		allMdx(limit: 2000, sort: { fields: [frontmatter___date], order: DESC }) {
 			edges {
 				node {
 					fields {

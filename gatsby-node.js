@@ -48,6 +48,7 @@ function addSiblingNodes(createNodeField) {
 exports.onCreateNode = ({ node, actions, getNode }) => {
 	const { createNodeField } = actions;
 	let slug;
+	let date = '';
 	if (node.internal.type === 'MarkdownRemark') {
 		const fileNode = getNode(node.parent);
 		const parsedFilePath = path.parse(fileNode.relativePath);
@@ -70,7 +71,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 			if (Object.prototype.hasOwnProperty.call(node.frontmatter, 'permalink'))
 				slug = `/${node.frontmatter.permalink}`;
 			if (Object.prototype.hasOwnProperty.call(node.frontmatter, 'date')) {
-				const date = moment(node.frontmatter.date, siteConfig.dateFromFormat);
+				date = moment(node.frontmatter.date, siteConfig.dateFromFormat);
 				if (!date.isValid) console.warn(`WARNING: Invalid date.`, node.frontmatter);
 
 				createNodeField({
@@ -83,14 +84,111 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 		createNodeField({ node, name: 'slug', value: slug });
 		postNodes.push(node);
 	}
+
+	if (node.internal.type === `Mdx`) {
+		const parent = getNode(node.parent);
+
+		const fileNode = getNode(node.parent);
+		const parsedFilePath = path.parse(fileNode.relativePath);
+
+		if (
+			Object.prototype.hasOwnProperty.call(node, 'frontmatter') &&
+			Object.prototype.hasOwnProperty.call(node.frontmatter, 'title')
+		) {
+			slug = `/${_.kebabCase(node.frontmatter.title)}`;
+		} else if (parsedFilePath.name !== 'index' && parsedFilePath.dir !== '') {
+			slug = `/${parsedFilePath.dir}/${parsedFilePath.name}/`;
+		} else if (parsedFilePath.dir === '') {
+			slug = `/${parsedFilePath.name}/`;
+		} else {
+			slug = `/${parsedFilePath.dir}/`;
+		}
+
+		if (Object.prototype.hasOwnProperty.call(node, 'frontmatter')) {
+			if (Object.prototype.hasOwnProperty.call(node.frontmatter, 'slug'))
+				slug = `/${_.kebabCase(node.frontmatter.slug)}`;
+			if (Object.prototype.hasOwnProperty.call(node.frontmatter, 'permalink'))
+				slug = `/${node.frontmatter.permalink}`;
+			if (Object.prototype.hasOwnProperty.call(node.frontmatter, 'date')) {
+				date = moment(node.frontmatter.date, siteConfig.dateFromFormat);
+				if (!date.isValid) console.warn(`WARNING: Invalid date.`, node.frontmatter);
+
+				date = date.toISOString();
+				// createNodeField({
+				// 	node,
+				// 	name: 'date',
+				// 	value: date.toISOString()
+				// });
+			}
+		}
+
+		createNodeField({
+			name: 'id',
+			node,
+			value: node.id
+		});
+
+		createNodeField({
+			name: 'title',
+			node,
+			value: node.frontmatter.title
+		});
+
+		createNodeField({
+			name: 'description',
+			node,
+			value: node.frontmatter.description
+		});
+
+		createNodeField({
+			name: 'slug',
+			node,
+			value: slug
+		});
+
+		createNodeField({
+			name: 'date',
+			node,
+			value: date
+		});
+
+		createNodeField({
+			name: 'banner',
+			node,
+			banner: node.frontmatter.banner
+		});
+
+		createNodeField({
+			name: 'categories',
+			node,
+			value: node.frontmatter.category || []
+		});
+
+		createNodeField({
+			name: 'keywords',
+			node,
+			value: node.frontmatter.keywords || []
+		});
+	}
 };
 
 exports.setFieldsOnGraphQLNodeType = ({ type, actions }) => {
 	const { name } = type;
 	const { createNodeField } = actions;
-	if (name === 'MarkdownRemark') {
+	if (name === 'MarkdownRemark' || name === 'Mdx') {
 		addSiblingNodes(createNodeField);
 	}
+};
+
+exports.onCreateWebpackConfig = ({ actions }) => {
+	actions.setWebpackConfig({
+		resolve: {
+			modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+			alias: {
+				$components: path.resolve(__dirname, 'src/components')
+			}
+		}
+	});
 };
 
 exports.createPages = ({ graphql, actions }) => {
@@ -104,7 +202,7 @@ exports.createPages = ({ graphql, actions }) => {
 			graphql(
 				`
 					{
-						allMarkdownRemark {
+						allMdx(sort: { order: DESC, fields: [frontmatter___date] }) {
 							edges {
 								node {
 									frontmatter {
@@ -113,7 +211,11 @@ exports.createPages = ({ graphql, actions }) => {
 										permalink
 									}
 									fields {
+										title
 										slug
+									}
+									code {
+										scope
 									}
 								}
 							}
@@ -129,27 +231,34 @@ exports.createPages = ({ graphql, actions }) => {
 
 				const tagSet = new Set();
 				const categorySet = new Set();
-				result.data.allMarkdownRemark.edges.forEach(edge => {
-					if (edge.node.frontmatter.tags) {
-						edge.node.frontmatter.tags.forEach(tag => {
+				const { edges } = result.data.allMdx;
+				edges.forEach(({ node }, i) => {
+					const prev = i === 0 ? null : edges[i - 1].node;
+					const next = i === edges.length - 1 ? null : edges[i + 1].node;
+
+					if (node.frontmatter.tags) {
+						node.frontmatter.tags.forEach(tag => {
 							tagSet.add(tag);
 						});
 					}
 
-					if (edge.node.frontmatter.category) {
-						categorySet.add(edge.node.frontmatter.category);
+					if (node.frontmatter.category) {
+						categorySet.add(node.frontmatter.category);
 					}
 
-					let pagePath = edge.node.fields.slug;
-					if (edge.node.frontmatter.permalink != null) {
-						pagePath = edge.node.frontmatter.permalink;
+					let pagePath = node.fields.slug;
+					if (node.frontmatter.permalink != null) {
+						pagePath = node.frontmatter.permalink;
 					}
 
 					createPage({
 						path: pagePath,
 						component: postPage,
 						context: {
-							slug: edge.node.fields.slug
+							id: node.id,
+							slug: node.fields.slug,
+							prev,
+							next
 						}
 					});
 				});

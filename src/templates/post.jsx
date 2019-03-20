@@ -1,6 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
-import { graphql } from 'gatsby';
+import { graphql, Link } from 'gatsby';
+import MDXRenderer from 'gatsby-mdx/mdx-renderer';
 import Layout from '../layout';
 import UserInfo from '../components/UserInfo/UserInfo';
 import Disqus from '../components/Disqus/Disqus';
@@ -11,27 +12,12 @@ import config from '../../data/SiteConfig';
 import './b16-tomorrow-dark.css';
 import './post.css';
 
-const BASEURL = 'testing';
-
-function template(content, data) {
-	return content.replace(/{{ (.+) }}/g, (match, key) => {
-		const value = data[key];
-		console.log('-------------');
-		console.log(key);
-		console.log(data);
-		console.log(value);
-		if (typeof value !== 'undefined') {
-			return value;
-		}
-		return match; // guards against some unintentional prefix
-	});
-}
-
 export default class PostTemplate extends React.Component {
 	render() {
-		const { slug } = this.props.pageContext;
-		const postNode = this.props.data.markdownRemark;
-		const post = postNode.frontmatter;
+        const { pageContext, data } = this.props;
+        const { slug, next, prev } = pageContext;
+        const { site, mdx } = data;
+		const post = mdx.frontmatter;
 		if (!post.id) {
 			post.id = slug;
 		}
@@ -44,16 +30,32 @@ export default class PostTemplate extends React.Component {
       <Helmet>
         <title>{`${post.title} | ${config.siteTitle}`}</title>
       </Helmet>
-      <SEO postPath={slug} postNode={postNode} postSEO />
+      <SEO postPath={slug} postNode={mdx} postSEO />
       <div>
         <h1>{post.title}</h1>
-        <div dangerouslySetInnerHTML={{ __html: template(postNode.html, { BASEURL }) }} />
+        <h2>{post.date}</h2>
+        <MDXRenderer>{mdx.code.body}</MDXRenderer>
+        {/* <div dangerouslySetInnerHTML={{ __html: postNode.html }} /> */}
         <div className="post-meta">
           <PostTags tags={post.tags} />
-          <SocialLinks postPath={slug} postNode={postNode} />
+          {prev && (
+          <span>
+          Previous
+            {' '}
+            <Link to={prev.fields.slug}>{prev.fields.title}</Link>
+          </span>
+          )}
+          {next && (
+          <span>
+          Next
+            {' '}
+            <Link to={next.fields.slug}>{next.fields.title}</Link>
+          </span>
+          )}
+          <SocialLinks postPath={slug} postNode={mdx} />
         </div>
         <UserInfo config={config} />
-        <Disqus postNode={postNode} />
+        <Disqus postNode={mdx} />
       </div>
     </div>
   </Layout>
@@ -64,24 +66,22 @@ export default class PostTemplate extends React.Component {
 /* eslint no-undef: "off" */
 export const pageQuery = graphql`
 	query BlogPostBySlug($slug: String!) {
-		markdownRemark(fields: { slug: { eq: $slug } }) {
-			html
+		mdx(fields: { slug: { eq: $slug } }) {
 			timeToRead
 			excerpt
 			frontmatter {
 				title
 				cover
-				date
+				date(formatString: "MMMM DD, YYYY")
 				category
 				tags
 			}
 			fields {
-				nextTitle
-				nextSlug
-				prevTitle
-				prevSlug
 				slug
 				date
+			}
+			code {
+				body
 			}
 		}
 	}
