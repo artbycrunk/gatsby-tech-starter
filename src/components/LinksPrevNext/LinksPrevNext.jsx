@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'gatsby';
-import './LinkPrevNext.css';
+import './LinksPrevNext.css';
 
 class LinksPrevNext extends Component {
     render() {
