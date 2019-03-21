@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import { Link } from 'gatsby';
+import Link from '../Link/Link';
+import './PostTags.scss';
 import common from '../../../data/common';
 
 class PostTags extends Component {
 	render() {
-		const { tags } = this.props;
+		const { category, tags } = this.props;
 		return (
   <div className="post-tag-container">
+    {category && (
+    <Link className="category_link" key={category} to={`/${category}`}>
+      {common.capitalizeFirstLetter(category)}
+    </Link>
+				)}
     {tags &&
 					tags.map(tag => (
   <Link className="tag_link" key={tag} to={`/tags/${_.kebabCase(tag)}`}>
