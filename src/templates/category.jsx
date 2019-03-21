@@ -11,11 +11,12 @@ export default class CategoryTemplate extends React.Component {
 		const { pageContext, data } = this.props;
 		const { category } = pageContext;
 		const { edges } = data.allMdx;
+
 		return (
   <Layout>
     <div className="content container category-container">
       <Helmet title={`${common.capitalizeFirstLetter(category)} | ${config.siteTitle}`} />
-      <PostListing postEdges={edges} />
+      <PostListing postEdges={edges} category={category} />
     </div>
   </Layout>
 		);
@@ -42,8 +43,8 @@ export const pageQuery = graphql`
 					frontmatter {
 						title
 						tags
-						cover
 						date
+						category
 					}
 				}
 			}

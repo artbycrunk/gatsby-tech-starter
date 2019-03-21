@@ -15,7 +15,7 @@ export default class TagTemplate extends React.Component {
   <Layout>
     <div className="content container tag-container">
       <Helmet title={`${common.capitalizeFirstLetter(tag)} | ${config.siteTitle}`} />
-      <PostListing postEdges={edges} />
+      <PostListing postEdges={edges} tag={tag} />
     </div>
   </Layout>
 		);
@@ -42,8 +42,8 @@ export const pageQuery = graphql`
 					frontmatter {
 						title
 						tags
-						cover
 						date
+						category
 					}
 				}
 			}

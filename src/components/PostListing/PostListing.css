@@ -1,0 +1,25 @@
+.post-grid-container {
+	display: grid;
+	grid-template-columns: 1fr;
+	/* grid-template-columns: 1fr 4fr; */
+	padding: 10px;
+	grid-gap: 10px;
+}
+
+.post-grid-item {
+	text-align: left;
+}
+
+.align-right {
+	text-align: left;
+}
+
+@media (min-width: 58em) {
+	.post-grid-container {
+		grid-template-columns: 1fr 4fr;
+	}
+
+	.align-right {
+		text-align: right;
+	}
+}
