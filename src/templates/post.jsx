@@ -55,14 +55,24 @@ export default class PostTemplate extends React.Component {
 export const pageQuery = graphql`
 	query BlogPostBySlug($slug: String!) {
 		mdx(fields: { slug: { eq: $slug } }) {
-			timeToRead
-			excerpt
 			frontmatter {
 				title
-				cover
 				date(formatString: "MMMM DD, YYYY")
 				category
 				tags
+				show_date
+				page_width
+				gallery {
+					image_path {
+						childImageSharp {
+							sizes(maxWidth: 1200) {
+								srcSet
+								...GatsbyImageSharpSizes_noBase64
+							}
+						}
+					}
+					title
+				}
 			}
 			fields {
 				slug
