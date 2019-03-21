@@ -12,7 +12,7 @@ class Index extends React.Component {
 		const postEdges = data.allMdx.edges;
 		return (
   <Layout>
-    <div className="index-container">
+    <div className="content container index-container">
       <Helmet title={config.siteTitle} />
       <SEO />
       <PostListing postEdges={postEdges} />
@@ -39,8 +39,8 @@ export const pageQuery = graphql`
 					frontmatter {
 						title
 						tags
-						cover
 						date
+						category
 					}
 				}
 			}
