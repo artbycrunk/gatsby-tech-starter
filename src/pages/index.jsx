@@ -4,7 +4,7 @@ import { graphql } from 'gatsby';
 import Layout from '../layout';
 import PostListing from '../components/PostListing/PostListing';
 import SEO from '../components/SEO/SEO';
-import config from '../../data/SiteConfig';
+import config from '../../data/config';
 
 class Index extends React.Component {
 	render() {
@@ -13,7 +13,7 @@ class Index extends React.Component {
 		return (
   <Layout>
     <div className="content container index-container">
-      <Helmet title={config.siteTitle} />
+      <Helmet title={config.site.title} />
       <SEO />
       <PostListing postEdges={postEdges} />
     </div>

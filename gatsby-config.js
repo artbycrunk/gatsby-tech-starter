@@ -1,18 +1,18 @@
 const common = require('./data/common');
-const config = require('./data/SiteConfig');
+const config = require('./data/config');
 
 module.exports = {
-	pathPrefix: config.pathPrefix,
+	pathPrefix: config.site.pathPrefix === "" ? "/" : config.site.pathPrefix,
 	siteMetadata: {
 		siteUrl: common.baseURL(),
 		rssMetadata: {
 			site_url: common.baseURL(),
 			feed_url: common.feedURL(),
-			title: config.siteTitle,
-			description: config.siteDescription,
+			title: config.site.title,
+			description: config.site.description,
 			image_url: `${common.baseURL()}/logos/logo-512.png`,
-			author: config.userName,
-			copyright: config.copyright
+			author: config.user.name,
+			copyright: config.site.copyright
 		}
 	},
 	plugins: [
@@ -63,13 +63,13 @@ module.exports = {
 		{
 			resolve: 'gatsby-plugin-google-analytics',
 			options: {
-				trackingId: config.googleAnalyticsID
+				trackingId: config.service.googleAnalyticsID
 			}
 		},
 		{
 			resolve: 'gatsby-plugin-nprogress',
 			options: {
-				color: config.themeColor
+				color: config.site.themeColor
 			}
 		},
 		'gatsby-plugin-sharp',
@@ -91,11 +91,11 @@ module.exports = {
 		{
 			resolve: 'gatsby-plugin-manifest',
 			options: {
-				name: config.siteTitle,
-				short_name: config.siteTitleShort,
-				description: config.siteDescription,
-				start_url: config.pathPrefix,
-				background_color: config.backgroundColor,
+				name: config.site.title,
+				short_name: config.site.titleShort,
+				description: config.site.description,
+				start_url: config.site.pathPrefix,
+				background_color: config.site.backgroundColor,
 				theme_color: config.themeColor,
 				display: 'minimal-ui',
 				icons: [
@@ -181,7 +181,7 @@ module.exports = {
               }
             }
           `,
-						output: config.siteRss
+						output: config.site.rss
 					}
 				]
 			}

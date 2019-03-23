@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { DiscussionEmbed, CommentCount } from 'disqus-react';
-import config from '../../../data/SiteConfig';
+import config from '../../../data/config';
 import common from '../../../data/common';
 import './Disqus.css';
 
 class Disqus extends Component {
 	render() {
 		const { postNode } = this.props;
-		const { disqusShortname } = config.serviceIDs;
+		const { disqusShortname } = config.service;
 		if (!disqusShortname) {
 			return null;
 		}

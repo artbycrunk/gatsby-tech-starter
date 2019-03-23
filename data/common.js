@@ -1,5 +1,5 @@
 const urljoin = require('url-join');
-const config = require('./SiteConfig');
+const config = require('./config');
 
 function capitalizeFirstLetter(item) {
 	return item.charAt(0).toUpperCase() + item.slice(1);
@@ -7,16 +7,16 @@ function capitalizeFirstLetter(item) {
 
 function buildURL(postPath) {
 	let url;
-	if (config.pathPrefix) {
+	if (config.site.pathPrefix) {
 		if (postPath) {
-			url = urljoin(config.siteUrl, config.pathPrefix, postPath);
+			url = urljoin(config.site.url, config.site.pathPrefix, postPath);
 		} else {
-			url = urljoin(config.siteUrl, config.pathPrefix);
+			url = urljoin(config.site.url, config.site.pathPrefix);
 		}
 	} else if (postPath) {
-		url = urljoin(config.siteUrl, postPath);
+		url = urljoin(config.site.url, postPath);
 	} else {
-		url = urljoin(config.siteUrl);
+		url = urljoin(config.site.url);
 	}
 	return url;
 }
@@ -30,7 +30,7 @@ function imageURL(image) {
 }
 
 function feedURL() {
-	return buildURL(config.siteRss);
+	return buildURL(config.site.rss);
 }
 
 function baseURL() {

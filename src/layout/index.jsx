@@ -1,7 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import { MDXProvider } from '@mdx-js/tag';
-import config from '../../data/SiteConfig';
+import config from '../../data/config';
 import './index.css';
 import Sidebar from '../components/Sidebar/Sidebar';
 import mdxComponents from '../components/mdx';
@@ -15,7 +15,7 @@ export default class MainLayout extends React.Component {
 		return (
   <div>
     <Helmet>
-      <meta name="description" content={config.siteDescription} />
+      <meta name="description" content={config.site.description} />
       <link rel="icon" type="image/png" href="/favicon.png" sizes="16x16" />
     </Helmet>
     <Sidebar />

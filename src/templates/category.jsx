@@ -3,7 +3,7 @@ import Helmet from 'react-helmet';
 import { graphql } from 'gatsby';
 import Layout from '../layout';
 import PostListing from '../components/PostListing/PostListing';
-import config from '../../data/SiteConfig';
+import config from '../../data/config';
 import common from '../../data/common';
 
 export default class CategoryTemplate extends React.Component {
@@ -15,7 +15,7 @@ export default class CategoryTemplate extends React.Component {
 		return (
   <Layout>
     <div className="content container category-container">
-      <Helmet title={`${common.capitalizeFirstLetter(category)} | ${config.siteTitle}`} />
+      <Helmet title={`${common.capitalizeFirstLetter(category)} | ${config.site.title}`} />
       <PostListing postEdges={edges} category={category} />
     </div>
   </Layout>

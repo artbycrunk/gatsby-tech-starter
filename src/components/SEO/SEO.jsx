@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
-import config from '../../../data/SiteConfig';
+import config from '../../../data/config';
 import common from '../../../data/common';
 
 class SEO extends Component {
@@ -10,7 +10,7 @@ class SEO extends Component {
 		let description;
 		let postURL;
 
-		let image = config.siteLogo;
+		let image = config.site.logo;
 
 		if (postSEO) {
 			const postMeta = postNode.frontmatter;
@@ -21,8 +21,7 @@ class SEO extends Component {
 			}
 			postURL = common.postURL(postPath);
 		} else {
-			title = config.siteTitle;
-			description = config.siteDescription;
+			({ title, description } = config.site);
 		}
 
 		image = common.imageURL(image);
@@ -33,7 +32,7 @@ class SEO extends Component {
 				'@type': 'WebSite',
 				url: blogURL,
 				name: title,
-				alternateName: config.siteTitleAlt ? config.siteTitleAlt : ''
+				alternateName: config.site.titleAlt ? config.site.titleAlt : ''
 			}
 		];
 		if (postSEO) {
@@ -58,7 +57,7 @@ class SEO extends Component {
 					'@type': 'BlogPosting',
 					url: blogURL,
 					name: title,
-					alternateName: config.siteTitleAlt ? config.siteTitleAlt : '',
+					alternateName: config.site.titleAlt ? config.site.titleAlt : '',
 					headline: title,
 					image: {
 						'@type': 'ImageObject',
@@ -83,11 +82,11 @@ class SEO extends Component {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={image} />
-    <meta property="fb:app_id" content={config.siteFBAppID ? config.siteFBAppID : ''} />
+    <meta property="fb:app_id" content={config.site.fBAppID ? config.site.fBAppID : ''} />
 
     {/* Twitter Card tags */}
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:creator" content={config.userTwitter ? config.userTwitter : ''} />
+    <meta name="twitter:creator" content={config.user.social.twitter ? config.user.social.twitter : ''} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={image} />

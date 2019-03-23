@@ -3,7 +3,7 @@ import Helmet from 'react-helmet';
 import { graphql } from 'gatsby';
 import Layout from '../layout';
 import PostListing from '../components/PostListing/PostListing';
-import config from '../../data/SiteConfig';
+import config from '../../data/config';
 
 class Error404 extends React.Component {
 	render() {
@@ -12,7 +12,7 @@ class Error404 extends React.Component {
 		return (
   <Layout>
     <div className="content container index-container">
-      <Helmet title={config.siteTitle} />
+      <Helmet title={config.site.title} />
       <h1>404: Page not found</h1>
       <div>Sorry, we've misplaced that URL or it's pointing to something that doesn't exist.</div>
       <div>Try finding it from the posts below.</div>

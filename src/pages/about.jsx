@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import Helmet from 'react-helmet';
 import Layout from '../layout';
 import About from '../components/About/About';
-import config from '../../data/SiteConfig';
+import config from '../../data/config';
 
 class AboutPage extends Component {
 	render() {
 		return (
   <Layout>
     <div className="content container about-container">
-      <Helmet title={`About | ${config.siteTitle}`} />
+      <Helmet title={`About | ${config.site.title}`} />
       <About />
     </div>
   </Layout>

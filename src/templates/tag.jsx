@@ -3,7 +3,7 @@ import Helmet from 'react-helmet';
 import { graphql } from 'gatsby';
 import Layout from '../layout';
 import PostListing from '../components/PostListing/PostListing';
-import config from '../../data/SiteConfig';
+import config from '../../data/config';
 import common from '../../data/common';
 
 export default class TagTemplate extends React.Component {
@@ -14,7 +14,7 @@ export default class TagTemplate extends React.Component {
 		return (
   <Layout>
     <div className="content container tag-container">
-      <Helmet title={`${common.capitalizeFirstLetter(tag)} | ${config.siteTitle}`} />
+      <Helmet title={`${common.capitalizeFirstLetter(tag)} | ${config.site.title}`} />
       <PostListing postEdges={edges} tag={tag} />
     </div>
   </Layout>
