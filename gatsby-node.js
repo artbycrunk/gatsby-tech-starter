@@ -2,6 +2,7 @@ const path = require('path');
 const _ = require('lodash');
 const moment = require('moment');
 const config = require('./data/config');
+const common = require('./data/common');
 
 const postNodes = [];
 
@@ -43,6 +44,16 @@ function addSiblingNodes(createNodeField) {
 			value: prevNode.fields.slug
 		});
 	}
+}
+
+function resolveTemplate(templateName) {
+	const templates = config.templates.path;
+	let foundTemplate = 'post';
+	if (Object.prototype.hasOwnProperty.call(config.templates.postTypes, templateName)) {
+		foundTemplate = config.templates.postTypes[templateName];
+	}
+	const url = common.urljoin(templates, `${foundTemplate}.jsx`);
+	return path.resolve(url);
 }
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
@@ -114,11 +125,6 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 				if (!date.isValid) console.warn(`WARNING: Invalid date.`, node.frontmatter);
 
 				date = date.toISOString();
-				// createNodeField({
-				// 	node,
-				// 	name: 'date',
-				// 	value: date.toISOString()
-				// });
 			}
 		}
 
@@ -195,9 +201,8 @@ exports.createPages = ({ graphql, actions }) => {
 	const { createPage } = actions;
 
 	return new Promise((resolve, reject) => {
-		const postPage = path.resolve('src/templates/post.jsx');
-		const tagPage = path.resolve('src/templates/tag.jsx');
-		const categoryPage = path.resolve('src/templates/category.jsx');
+		const postPage = resolveTemplate('post');
+
 		resolve(
 			graphql(
 				`
@@ -209,6 +214,7 @@ exports.createPages = ({ graphql, actions }) => {
 										tags
 										category
 										permalink
+										page_type
 									}
 									fields {
 										title
@@ -231,29 +237,38 @@ exports.createPages = ({ graphql, actions }) => {
 
 				const tagSet = new Set();
 				const categorySet = new Set();
+
 				const { edges } = result.data.allMdx;
 				edges.forEach(({ node }, i) => {
 					const prev = i === 0 ? null : edges[i - 1].node;
 					const next = i === edges.length - 1 ? null : edges[i + 1].node;
+					const { tags, category, permalink, page_type } = node.frontmatter;
 
-					if (node.frontmatter.tags) {
-						node.frontmatter.tags.forEach(tag => {
+					if (tags) {
+						tags.forEach(tag => {
 							tagSet.add(tag);
 						});
 					}
 
-					if (node.frontmatter.category) {
-						categorySet.add(node.frontmatter.category);
+					if (category) {
+						categorySet.add(category);
 					}
 
 					let pagePath = node.fields.slug;
-					if (node.frontmatter.permalink != null) {
-						pagePath = node.frontmatter.permalink;
+					if (permalink != null) {
+						pagePath = permalink;
+					}
+
+					let currentPage = postPage;
+					// TODO  cache the template lookup
+					if (Object.prototype.hasOwnProperty.call(config.templates.postTypes, page_type)) {
+						const templatePage = resolveTemplate(page_type);
+						currentPage = templatePage;
 					}
 
 					createPage({
 						path: pagePath,
-						component: postPage,
+						component: currentPage,
 						context: {
 							id: node.id,
 							slug: node.fields.slug,
@@ -264,26 +279,32 @@ exports.createPages = ({ graphql, actions }) => {
 				});
 
 				const tagList = Array.from(tagSet);
-				tagList.forEach(tag => {
-					createPage({
-						path: `/tags/${_.kebabCase(tag)}/`,
-						component: tagPage,
-						context: {
-							tag
-						}
+				if (tagList) {
+					const tagPage = resolveTemplate('tag');
+					tagList.forEach(tag => {
+						createPage({
+							path: `/tags/${_.kebabCase(tag)}/`,
+							component: tagPage,
+							context: {
+								tag
+							}
+						});
 					});
-				});
+				}
 
 				const categoryList = Array.from(categorySet);
-				categoryList.forEach(category => {
-					createPage({
-						path: `/categories/${_.kebabCase(category)}/`,
-						component: categoryPage,
-						context: {
-							category
-						}
+				if (categoryList) {
+					const categoryPage = resolveTemplate('category');
+					categoryList.forEach(category => {
+						createPage({
+							path: `/${_.kebabCase(category)}/`,
+							component: categoryPage,
+							context: {
+								category
+							}
+						});
 					});
-				});
+				}
 			})
 		);
 	});

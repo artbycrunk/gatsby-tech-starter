@@ -42,5 +42,6 @@ module.exports = {
 	imageURL,
 	feedURL,
 	baseURL,
-	capitalizeFirstLetter
+	capitalizeFirstLetter,
+	urljoin
 };
