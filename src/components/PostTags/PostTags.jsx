@@ -5,24 +5,35 @@ import './PostTags.scss';
 import common from '../../../data/common';
 
 class PostTags extends Component {
-	render() {
-		const { category, tags } = this.props;
-		return (
-  <div className="post-tag-container">
-    {category && (
-    <Link className="category_link" key={category} to={`/${category}`}>
-      {common.capitalizeFirstLetter(category)}
-    </Link>
-				)}
-    {tags &&
-					tags.map(tag => (
-  <Link className="tag_link" key={tag} to={`/tags/${_.kebabCase(tag)}`}>
-    {common.capitalizeFirstLetter(tag)}
-  </Link>
-					))}
-  </div>
-		);
-	}
+  render() {
+    const { category, tags } = this.props;
+    const tagLen = tags.length;
+
+    function getLink(key, className, type) {
+      let link = `/${key}`;
+      if (type === 'tag') {
+        link = `/tags/${_.kebabCase(key)}`;
+      }
+      return (
+        <Link className={className} key={key} to={link}>
+          {common.capitalizeFirstLetter(key)}
+        </Link>
+      );
+    }
+
+    return (
+      <div className="post-tag-container">
+        {category && getLink(category, 'category_link', 'category')}
+        {tags &&
+     tags.map((tag, i) => {
+        if (tagLen === i + 1) {
+          return getLink(tag, 'tag_link_last', 'tag');
+        }
+        return getLink(tag, 'tag_link', 'tag');
+    })}
+      </div>
+    );
+  }
 }
 
 export default PostTags;
