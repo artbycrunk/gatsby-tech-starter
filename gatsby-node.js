@@ -6,6 +6,8 @@ const common = require('./data/common');
 
 const postNodes = [];
 
+const { hasOwnProperty } = Object.prototype;
+
 function addSiblingNodes(createNodeField) {
 	postNodes.sort(({ frontmatter: { date: date1 } }, { frontmatter: { date: date2 } }) => {
 		const dateA = moment(date1, config.site.dateFromFormat);
@@ -49,7 +51,7 @@ function addSiblingNodes(createNodeField) {
 function resolveTemplate(templateName) {
 	const templates = config.templates.path;
 	let foundTemplate = 'post';
-	if (Object.prototype.hasOwnProperty.call(config.templates.postTypes, templateName)) {
+	if (hasOwnProperty.call(config.templates.postTypes, templateName)) {
 		foundTemplate = config.templates.postTypes[templateName];
 	}
 	const url = common.urljoin(templates, `${foundTemplate}.jsx`);
@@ -60,72 +62,28 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 	const { createNodeField } = actions;
 	let slug;
 	let date = '';
-	if (node.internal.type === 'MarkdownRemark') {
-		const fileNode = getNode(node.parent);
-		const parsedFilePath = path.parse(fileNode.relativePath);
-		if (
-			Object.prototype.hasOwnProperty.call(node, 'frontmatter') &&
-			Object.prototype.hasOwnProperty.call(node.frontmatter, 'title')
-		) {
-			slug = `/${_.kebabCase(node.frontmatter.title)}`;
-		} else if (parsedFilePath.name !== 'index' && parsedFilePath.dir !== '') {
-			slug = `/${parsedFilePath.dir}/${parsedFilePath.name}/`;
-		} else if (parsedFilePath.dir === '') {
-			slug = `/${parsedFilePath.name}/`;
-		} else {
-			slug = `/${parsedFilePath.dir}/`;
-		}
-
-		if (Object.prototype.hasOwnProperty.call(node, 'frontmatter')) {
-			if (Object.prototype.hasOwnProperty.call(node.frontmatter, 'slug'))
-				slug = `/${_.kebabCase(node.frontmatter.slug)}`;
-			if (Object.prototype.hasOwnProperty.call(node.frontmatter, 'permalink'))
-				slug = `/${node.frontmatter.permalink}`;
-			if (Object.prototype.hasOwnProperty.call(node.frontmatter, 'date')) {
-				date = moment(node.frontmatter.date, config.site.dateFromFormat);
-				if (!date.isValid) console.warn(`WARNING: Invalid date.`, node.frontmatter);
-
-				createNodeField({
-					node,
-					name: 'date',
-					value: date.toISOString()
-				});
-			}
-		}
-		createNodeField({ node, name: 'slug', value: slug });
-		postNodes.push(node);
-	}
 
 	if (node.internal.type === `Mdx`) {
-		const parent = getNode(node.parent);
-
 		const fileNode = getNode(node.parent);
 		const parsedFilePath = path.parse(fileNode.relativePath);
 
-		if (
-			Object.prototype.hasOwnProperty.call(node, 'frontmatter') &&
-			Object.prototype.hasOwnProperty.call(node.frontmatter, 'title')
-		) {
-			slug = `/${_.kebabCase(node.frontmatter.title)}`;
-		} else if (parsedFilePath.name !== 'index' && parsedFilePath.dir !== '') {
-			slug = `/${parsedFilePath.dir}/${parsedFilePath.name}/`;
-		} else if (parsedFilePath.dir === '') {
-			slug = `/${parsedFilePath.name}/`;
-		} else {
-			slug = `/${parsedFilePath.dir}/`;
-		}
+		if (hasOwnProperty.call(node, 'frontmatter')) {
+			if (hasOwnProperty.call(node.frontmatter, 'title')) slug = `/${_.kebabCase(node.frontmatter.title)}`;
+			if (hasOwnProperty.call(node.frontmatter, 'slug')) slug = `/${_.kebabCase(node.frontmatter.slug)}`;
+			if (hasOwnProperty.call(node.frontmatter, 'permalink')) slug = `/${node.frontmatter.permalink}`;
 
-		if (Object.prototype.hasOwnProperty.call(node, 'frontmatter')) {
-			if (Object.prototype.hasOwnProperty.call(node.frontmatter, 'slug'))
-				slug = `/${_.kebabCase(node.frontmatter.slug)}`;
-			if (Object.prototype.hasOwnProperty.call(node.frontmatter, 'permalink'))
-				slug = `/${node.frontmatter.permalink}`;
-			if (Object.prototype.hasOwnProperty.call(node.frontmatter, 'date')) {
+			if (hasOwnProperty.call(node.frontmatter, 'date')) {
 				date = moment(node.frontmatter.date, config.site.dateFromFormat);
 				if (!date.isValid) console.warn(`WARNING: Invalid date.`, node.frontmatter);
 
 				date = date.toISOString();
 			}
+		} else if (parsedFilePath.name !== 'index' && parsedFilePath.dir !== '') {
+			slug = `/${parsedFilePath.dir}/${parsedFilePath.name}/`;
+		} else if (parsedFilePath.dir === '') {
+			slug = `/${parsedFilePath.name}/`;
+		} else {
+			slug = `/${parsedFilePath.dir}/`;
 		}
 
 		createNodeField({
@@ -141,12 +99,6 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 		});
 
 		createNodeField({
-			name: 'description',
-			node,
-			value: node.frontmatter.description
-		});
-
-		createNodeField({
 			name: 'slug',
 			node,
 			value: slug
@@ -156,24 +108,6 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 			name: 'date',
 			node,
 			value: date
-		});
-
-		createNodeField({
-			name: 'banner',
-			node,
-			banner: node.frontmatter.banner
-		});
-
-		createNodeField({
-			name: 'categories',
-			node,
-			value: node.frontmatter.category || []
-		});
-
-		createNodeField({
-			name: 'keywords',
-			node,
-			value: node.frontmatter.keywords || []
 		});
 	}
 };
