@@ -1,14 +1,14 @@
 const path = require('path');
 const _ = require('lodash');
 const moment = require('moment');
-const siteConfig = require('./data/SiteConfig');
+const config = require('./data/config');
 
 const postNodes = [];
 
 function addSiblingNodes(createNodeField) {
 	postNodes.sort(({ frontmatter: { date: date1 } }, { frontmatter: { date: date2 } }) => {
-		const dateA = moment(date1, siteConfig.dateFromFormat);
-		const dateB = moment(date2, siteConfig.dateFromFormat);
+		const dateA = moment(date1, config.site.dateFromFormat);
+		const dateB = moment(date2, config.site.dateFromFormat);
 
 		if (dateA.isBefore(dateB)) return 1;
 
@@ -71,7 +71,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 			if (Object.prototype.hasOwnProperty.call(node.frontmatter, 'permalink'))
 				slug = `/${node.frontmatter.permalink}`;
 			if (Object.prototype.hasOwnProperty.call(node.frontmatter, 'date')) {
-				date = moment(node.frontmatter.date, siteConfig.dateFromFormat);
+				date = moment(node.frontmatter.date, config.site.dateFromFormat);
 				if (!date.isValid) console.warn(`WARNING: Invalid date.`, node.frontmatter);
 
 				createNodeField({
@@ -110,7 +110,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 			if (Object.prototype.hasOwnProperty.call(node.frontmatter, 'permalink'))
 				slug = `/${node.frontmatter.permalink}`;
 			if (Object.prototype.hasOwnProperty.call(node.frontmatter, 'date')) {
-				date = moment(node.frontmatter.date, siteConfig.dateFromFormat);
+				date = moment(node.frontmatter.date, config.site.dateFromFormat);
 				if (!date.isValid) console.warn(`WARNING: Invalid date.`, node.frontmatter);
 
 				date = date.toISOString();
