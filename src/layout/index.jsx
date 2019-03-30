@@ -1,7 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import { MDXProvider } from '@mdx-js/tag';
-import config from '../../data/config';
+import config from '../tokens/config';
 import './index.css';
 import Sidebar from '../components/Sidebar/Sidebar';
 import mdxComponents from '../components/mdx';

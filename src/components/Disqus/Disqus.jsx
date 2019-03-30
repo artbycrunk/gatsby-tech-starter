@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { DiscussionEmbed, CommentCount } from 'disqus-react';
-import config from '../../../data/config';
-import common from '../../../data/common';
+import config from '../../tokens/config';
+import common from '../../tokens/common';
+
 import './Disqus.css';
 
 class Disqus extends Component {

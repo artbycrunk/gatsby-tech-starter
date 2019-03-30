@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'gatsby';
 import './PostListing.css';
-import common from '../../../data/common';
+import common from '../../tokens/common';
 
 class PostListing extends React.Component {
 	getPostList() {

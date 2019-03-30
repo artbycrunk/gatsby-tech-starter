@@ -3,8 +3,8 @@ import Helmet from 'react-helmet';
 import { graphql } from 'gatsby';
 import Layout from '../layout';
 import PostListing from '../components/PostListing/PostListing';
-import config from '../../data/config';
-import common from '../../data/common';
+import config from '../tokens/config';
+import common from '../tokens/common';
 
 export default class CategoryTemplate extends React.Component {
 	render() {

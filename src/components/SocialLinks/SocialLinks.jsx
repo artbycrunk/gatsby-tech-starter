@@ -17,8 +17,8 @@ import {
 	LinkedinIcon,
 	RedditIcon
 } from 'react-share';
-import common from '../../../data/common';
 import './SocialLinks.css';
+import common from '../../tokens/common';
 
 class SocialLinks extends Component {
 	render() {

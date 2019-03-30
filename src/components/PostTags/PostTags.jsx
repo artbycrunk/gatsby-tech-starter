@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import Link from '../Link/Link';
 import './PostTags.scss';
-import common from '../../../data/common';
+import common from '../../tokens/common';
 
 class PostTags extends Component {
   render() {

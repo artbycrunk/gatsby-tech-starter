@@ -4,7 +4,7 @@ import { graphql } from 'gatsby';
 import Layout from '../layout';
 import PostListing from '../components/PostListing/PostListing';
 import SEO from '../components/SEO/SEO';
-import config from '../../data/config';
+import config from '../tokens/config';
 
 class Index extends React.Component {
 	render() {
