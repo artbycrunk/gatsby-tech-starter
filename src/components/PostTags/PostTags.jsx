@@ -7,7 +7,6 @@ import common from '../../tokens/common';
 class PostTags extends Component {
   render() {
     const { category, tags } = this.props;
-    const tagLen = tags.length;
 
     function getLink(key, className, type) {
       let link = `/${key}`;
@@ -24,16 +23,15 @@ class PostTags extends Component {
     return (
       <div className="post-tag-container">
         {category && getLink(category, 'category_link', 'category')}
-        {tags &&
-     tags.map((tag, i) => {
-        if (tagLen === i + 1) {
-          return getLink(tag, 'tag_link_last', 'tag');
-        }
-        return getLink(tag, 'tag_link', 'tag');
-    })}
+        {tags && tags.map((tag, i) => {
+            if (tags.length === i + 1) {
+                return getLink(tag, 'tag_link_last', 'tag');
+            }
+            return getLink(tag, 'tag_link', 'tag');
+        })}
       </div>
-    );
-  }
+);
+}
 }
 
 export default PostTags;
