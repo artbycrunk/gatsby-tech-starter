@@ -1,8 +1,8 @@
-const common = require('./data/common');
-const config = require('./data/config');
+const config = require('./src/tokens/config');
+const common = require('./src/tokens/common');
 
 module.exports = {
-	pathPrefix: config.site.pathPrefix === "" ? "/" : config.site.pathPrefix,
+	pathPrefix: config.site.pathPrefix === '' ? '/' : config.site.pathPrefix,
 	siteMetadata: {
 		siteUrl: common.baseURL(),
 		rssMetadata: {
@@ -18,18 +18,24 @@ module.exports = {
 	plugins: [
 		'gatsby-plugin-react-helmet',
 		'gatsby-plugin-lodash',
+		 {
+            resolve: `gatsby-plugin-page-creator`,
+            options: {
+                path: `${__dirname}/src/pages`,
+            },
+		},
 		{
 			resolve: 'gatsby-source-filesystem',
 			options: {
 				name: 'assets',
-				path: `${__dirname}/static/`
+				path: 'static'
 			}
 		},
 		{
 			resolve: 'gatsby-source-filesystem',
 			options: {
 				name: 'posts',
-				path: `${__dirname}/content/`
+				path: 'content'
 			}
 		},
 		{
