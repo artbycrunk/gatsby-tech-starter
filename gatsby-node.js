@@ -1,12 +1,31 @@
 const path = require('path');
 const _ = require('lodash');
 const moment = require('moment');
-const config = require('./data/config');
-const common = require('./data/common');
+const config = require('./src/tokens/config');
+const common = require('./src/tokens/common');
 
 const postNodes = [];
 
 const { hasOwnProperty } = Object.prototype;
+
+function withThemePath(relativePath) {
+    const pathResolvedPath = path.resolve(relativePath);
+    let finalPath = pathResolvedPath;
+
+    try {
+        // check if the user's site has the file
+        require.resolve(pathResolvedPath);
+        finalPath = pathResolvedPath;
+    } catch (e) {
+        try {
+            // if the user hasn't implemented the file,
+            finalPath = require.resolve(relativePath);
+        } catch (e) {
+            return relativePath;
+        }
+    }
+    return finalPath;
+};
 
 function addSiblingNodes(createNodeField) {
 	postNodes.sort(({ frontmatter: { date: date1 } }, { frontmatter: { date: date2 } }) => {
@@ -55,7 +74,7 @@ function resolveTemplate(templateName) {
 		foundTemplate = config.templates.postTypes[templateName];
 	}
 	const url = common.urljoin(templates, `${foundTemplate}.jsx`);
-	return path.resolve(url);
+	return withThemePath(url);
 }
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
@@ -123,7 +142,7 @@ exports.setFieldsOnGraphQLNodeType = ({ type, actions }) => {
 exports.onCreateWebpackConfig = ({ actions }) => {
 	actions.setWebpackConfig({
 		resolve: {
-			modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+			modules: [require.resolve(__dirname, 'src'), 'node_modules'],
 			alias: {
 				$components: path.resolve(__dirname, 'src/components')
 			}
