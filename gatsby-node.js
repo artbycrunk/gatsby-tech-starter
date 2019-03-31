@@ -1,7 +1,6 @@
 const path = require('path');
 const _ = require('lodash');
 const moment = require('moment');
-const config = require('./src/tokens/config');
 const common = require('./src/tokens/common');
 
 const postNodes = [];
@@ -9,23 +8,27 @@ const postNodes = [];
 const { hasOwnProperty } = Object.prototype;
 
 function withThemePath(relativePath) {
-    const pathResolvedPath = path.resolve(relativePath);
-    let finalPath = pathResolvedPath;
+	let pathResolvedPath = path.resolve(relativePath);
+	let finalPath = pathResolvedPath;
+	try {
+		// check if the user's site has the file
+		const dirname = __dirname.split(path.sep).pop();
+		pathResolvedPath = pathResolvedPath.replace(`${path.sep}src`, `${path.sep}src${path.sep}${dirname}`);
+		require.resolve(pathResolvedPath);
+		finalPath = pathResolvedPath;
+	} catch (e) {
+		try {
+			// if the user hasn't implemented the file,
+			finalPath = require.resolve(relativePath);
+		} catch (e) {
+			return false;
+		}
+	}
+	return finalPath;
+}
 
-    try {
-        // check if the user's site has the file
-        require.resolve(pathResolvedPath);
-        finalPath = pathResolvedPath;
-    } catch (e) {
-        try {
-            // if the user hasn't implemented the file,
-            finalPath = require.resolve(relativePath);
-        } catch (e) {
-            return relativePath;
-        }
-    }
-    return finalPath;
-};
+// eslint-disable-next-line
+const config = require(withThemePath('./src/tokens/config'));
 
 function addSiblingNodes(createNodeField) {
 	postNodes.sort(({ frontmatter: { date: date1 } }, { frontmatter: { date: date2 } }) => {
@@ -214,9 +217,12 @@ exports.createPages = ({ graphql, actions }) => {
 
 					let currentPage = postPage;
 					// TODO  cache the template lookup
-					if (Object.prototype.hasOwnProperty.call(config.templates.postTypes, page_type)) {
+					if (hasOwnProperty.call(config.templates.postTypes, page_type)) {
 						const templatePage = resolveTemplate(page_type);
-						currentPage = templatePage;
+						if (templatePage) {
+							console.log(`${page_type} : ${node.fields.slug}`);
+							currentPage = templatePage;
+						}
 					}
 
 					createPage({
