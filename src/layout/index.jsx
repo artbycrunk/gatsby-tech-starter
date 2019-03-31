@@ -18,6 +18,7 @@ export default class MainLayout extends React.Component {
     <Helmet>
       <meta name="description" content={config.site.description} />
       <link rel="icon" type={favicon.type} href={favicon.href} sizes={favicon.sizes} />
+      <meta name="theme-color" content={config.site.themeColor} />
     </Helmet>
     <Sidebar />
     <MDXProvider components={mdxComponents}>{children}</MDXProvider>

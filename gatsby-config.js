@@ -98,11 +98,16 @@ module.exports = {
 				name: config.site.title,
 				short_name: config.site.titleShort,
 				description: config.site.description,
-				start_url: config.site.pathPrefix,
+				start_url: config.site.pathPrefix === '' ? '/' : config.site.pathPrefix,
 				background_color: config.site.backgroundColor,
-				theme_color: config.themeColor,
+				theme_color: config.site.themeColor,
 				display: 'minimal-ui',
-				icons: [config.icons['logo-192'], config.icons['logo-512']]
+				icon: config.icons.main,
+				icons: [
+					config.icons['logo-144'],
+					config.icons['logo-192'],
+					config.icons['logo-512']
+				]
 			}
 		},
 		'gatsby-plugin-offline',
