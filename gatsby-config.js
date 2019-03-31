@@ -1,5 +1,8 @@
-const config = require('./src/tokens/config');
+const fn = require('./functions');
 const common = require('./src/tokens/common');
+
+// eslint-disable-next-line
+const config = require(fn.withThemePath('./src/tokens/config'));
 
 module.exports = {
 	pathPrefix: config.site.pathPrefix === '' ? '/' : config.site.pathPrefix,
@@ -99,8 +102,7 @@ module.exports = {
 				background_color: config.site.backgroundColor,
 				theme_color: config.themeColor,
 				display: 'minimal-ui',
-				icons: [config.icons['logo-192'],
-						    config.icons['logo-512']]
+				icons: [config.icons['logo-192'], config.icons['logo-512']]
 			}
 		},
 		'gatsby-plugin-offline',

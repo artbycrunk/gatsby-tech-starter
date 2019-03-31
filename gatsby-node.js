@@ -2,33 +2,14 @@ const path = require('path');
 const _ = require('lodash');
 const moment = require('moment');
 const common = require('./src/tokens/common');
+const fn = require('./functions');
 
 const postNodes = [];
 
 const { hasOwnProperty } = Object.prototype;
 
-function withThemePath(relativePath) {
-	let pathResolvedPath = path.resolve(relativePath);
-	let finalPath = pathResolvedPath;
-	try {
-		// check if the user's site has the file
-		const dirname = __dirname.split(path.sep).pop();
-		pathResolvedPath = pathResolvedPath.replace(`${path.sep}src`, `${path.sep}src${path.sep}${dirname}`);
-		require.resolve(pathResolvedPath);
-		finalPath = pathResolvedPath;
-	} catch (e) {
-		try {
-			// if the user hasn't implemented the file,
-			finalPath = require.resolve(relativePath);
-		} catch (e) {
-			return false;
-		}
-	}
-	return finalPath;
-}
-
 // eslint-disable-next-line
-const config = require(withThemePath('./src/tokens/config'));
+const config = require(fn.withThemePath('./src/tokens/config'));
 
 function addSiblingNodes(createNodeField) {
 	postNodes.sort(({ frontmatter: { date: date1 } }, { frontmatter: { date: date2 } }) => {
@@ -77,7 +58,7 @@ function resolveTemplate(templateName) {
 		foundTemplate = config.templates.postTypes[templateName];
 	}
 	const url = common.urljoin(templates, `${foundTemplate}.jsx`);
-	return withThemePath(url);
+	return fn.withThemePath(url);
 }
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
