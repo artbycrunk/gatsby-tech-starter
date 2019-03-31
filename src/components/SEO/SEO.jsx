@@ -10,7 +10,7 @@ class SEO extends Component {
 		let description;
 		let postURL;
 
-		let image = config.site.logo;
+		let image = config.icons["logo-144"].src;
 
 		if (postSEO) {
 			const postMeta = postNode.frontmatter;
