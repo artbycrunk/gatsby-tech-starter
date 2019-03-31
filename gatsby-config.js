@@ -18,11 +18,11 @@ module.exports = {
 	plugins: [
 		'gatsby-plugin-react-helmet',
 		'gatsby-plugin-lodash',
-		 {
-            resolve: `gatsby-plugin-page-creator`,
-            options: {
-                path: `${__dirname}/src/pages`,
-            },
+		{
+			resolve: `gatsby-plugin-page-creator`,
+			options: {
+				path: `${__dirname}/src/pages`
+			}
 		},
 		{
 			resolve: 'gatsby-source-filesystem',
