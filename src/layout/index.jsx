@@ -12,11 +12,12 @@ import 'typeface-pt-sans';
 export default class MainLayout extends React.Component {
 	render() {
 		const { children } = this.props;
+		const { favicon } = config.site;
 		return (
   <div>
     <Helmet>
       <meta name="description" content={config.site.description} />
-      <link rel="icon" type="image/png" href="/favicon.png" sizes="16x16" />
+      <link rel="icon" type={favicon.type} href={favicon.href} sizes={favicon.sizes} />
     </Helmet>
     <Sidebar />
     <MDXProvider components={mdxComponents}>{children}</MDXProvider>
