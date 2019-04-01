@@ -11,8 +11,8 @@ class PhotoGallery extends Component {
 			currentImage: false,
 			imageSizes: props.images.map(image =>
 				Object.assign({
-					src: image.image_path.childImageSharp.sizes.src,
-					srcSet: image.image_path.childImageSharp.sizes.srcSet
+					src: image.image_path.childImageSharp.fluid.src,
+					srcSet: image.image_path.childImageSharp.fluid.srcSet
 				})
 			)
 		};
@@ -32,11 +32,9 @@ class PhotoGallery extends Component {
 	}
 
 	static getInfo(image) {
-		console.log(image);
 		let info = '';
 		if (image.image_info) {
 			info = <p className="image_info_page">{image.image_info}</p>;
-			console.log(info);
 		}
 		return info;
 	}
@@ -86,7 +84,7 @@ class PhotoGallery extends Component {
 									//   className={image.title}
               alt={`${currImage.image_anno} ( ${currImage.image_page} )`}
               title={`${currImage.image_anno} ( ${currImage.image_page} )`}
-              sizes={currImage.image_path.childImageSharp.sizes}
+              fluid={currImage.image_path.childImageSharp.fluid}
             />
           </div>
           {PhotoGallery.getTitle(currImage, showTitle)}
@@ -102,7 +100,7 @@ class PhotoGallery extends Component {
       onClickPrev={() => this.gotoPrevLightboxImage()}
       onClickNext={() => this.gotoNextLightboxImage()}
       onClose={() => this.closeLightbox()}
-				/>
+    />
   </div>
 		);
 	}

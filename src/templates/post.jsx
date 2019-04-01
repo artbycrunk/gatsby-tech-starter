@@ -64,12 +64,7 @@ export const pageQuery = graphql`
 				page_width
 				gallery {
 					image_path {
-						childImageSharp {
-							sizes(maxWidth: 1200) {
-								srcSet
-								...GatsbyImageSharpSizes_noBase64
-							}
-						}
+						...ImageSharpCustom
 					}
 					title
 				}

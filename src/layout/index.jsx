@@ -1,6 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import { MDXProvider } from '@mdx-js/tag';
+import { graphql } from 'gatsby';
 import config from '../tokens/config';
 import './index.css';
 import Sidebar from '../components/Sidebar/Sidebar';
@@ -26,3 +27,19 @@ export default class MainLayout extends React.Component {
 		);
 	}
 }
+
+export const ImageSharpCustom = graphql`
+	fragment ImageSharpCustom on File {
+		publicURL
+		childImageSharp {
+			fluid(maxWidth: 1200) {
+				srcSet
+				...GatsbyImageSharpFluid_withWebp
+			}
+			sizes(maxWidth: 1200) {
+				srcSet
+				...GatsbyImageSharpSizes_withWebp
+			}
+		}
+	}
+`;
