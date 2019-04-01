@@ -52,7 +52,9 @@ module.exports = {
 					{
 						resolve: 'gatsby-remark-images',
 						options: {
-							maxWidth: 690
+							maxWidth: 690,
+							withWebp: true,
+							tracedSVG: true
 						}
 					},
 					{
@@ -103,11 +105,7 @@ module.exports = {
 				theme_color: config.site.themeColor,
 				display: 'minimal-ui',
 				icon: config.icons.main,
-				icons: [
-					config.icons['logo-144'],
-					config.icons['logo-192'],
-					config.icons['logo-512']
-				]
+				icons: [config.icons['logo-144'], config.icons['logo-192'], config.icons['logo-512']]
 			}
 		},
 		'gatsby-plugin-offline',
