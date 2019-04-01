@@ -3,6 +3,8 @@ import './PhotoGallery.css';
 import Img from 'gatsby-image';
 import Lightbox from 'react-images';
 
+const path = require('path');
+
 class PhotoGallery extends Component {
 	constructor(props) {
 		super(props);
@@ -18,7 +20,15 @@ class PhotoGallery extends Component {
 		};
 	}
 
-	static getTitle(image, showTitle) {
+	static getTitle(currImage) {
+		if (currImage.image_anno) {
+			return `${currImage.image_anno} ( ${currImage.image_page} )`;
+		}
+		const filename = path.basename(currImage.image_path.childImageSharp.fluid.src);
+		return `${filename}`;
+	}
+
+	static getTitleText(image, showTitle) {
 		let title = '';
 		if (showTitle) {
 			title = (
@@ -82,12 +92,12 @@ class PhotoGallery extends Component {
             <Img
               key={index}
 									//   className={image.title}
-              alt={`${currImage.image_anno} ( ${currImage.image_page} )`}
-              title={`${currImage.image_anno} ( ${currImage.image_page} )`}
+              alt={PhotoGallery.getTitle(currImage)}
+              title={PhotoGallery.getTitle(currImage)}
               fluid={currImage.image_path.childImageSharp.fluid}
             />
           </div>
-          {PhotoGallery.getTitle(currImage, showTitle)}
+          {PhotoGallery.getTitleText(currImage, showTitle)}
           {PhotoGallery.getInfo(currImage)}
         </div>
 					))}
