@@ -55,8 +55,10 @@ module.exports = {
 		default: '/'
 	},
 	icons: {
-		main: './static/icon.png',
 		// Logo used for SEO and manifest.
+		main: './static/icon.png',
+
+		// Auto generated from gatsby-plugin-manifest
 		'logo-144': {
 			src: '/logos/logo-144x144.png',
 			sizes: '144x144',
