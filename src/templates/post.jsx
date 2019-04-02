@@ -3,7 +3,6 @@ import Helmet from 'react-helmet';
 import { graphql } from 'gatsby';
 import MDXRenderer from 'gatsby-mdx/mdx-renderer';
 import Layout from '../layout';
-import UserInfo from '../components/UserInfo/UserInfo';
 import Disqus from '../components/Disqus/Disqus';
 import PostTags from '../components/PostTags/PostTags';
 import LinksPrevNext from '../components/LinksPrevNext/LinksPrevNext';
@@ -42,7 +41,6 @@ export default class PostTemplate extends React.Component {
           <SocialLinks postPath={slug} postNode={mdx} />
           <LinksPrevNext prev={prev} next={next} />
         </div>
-        <UserInfo config={config} />
         <Disqus postNode={mdx} />
       </div>
     </div>
