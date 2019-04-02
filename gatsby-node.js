@@ -71,9 +71,9 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 		const parsedFilePath = path.parse(fileNode.relativePath);
 
 		if (hasOwnProperty.call(node, 'frontmatter')) {
-			if (hasOwnProperty.call(node.frontmatter, 'title')) slug = `/${_.kebabCase(node.frontmatter.title)}`;
-			if (hasOwnProperty.call(node.frontmatter, 'slug')) slug = `/${_.kebabCase(node.frontmatter.slug)}`;
-			if (hasOwnProperty.call(node.frontmatter, 'permalink')) slug = `/${node.frontmatter.permalink}`;
+			if (hasOwnProperty.call(node.frontmatter, 'title')) slug = `${_.kebabCase(node.frontmatter.title)}`;
+			if (hasOwnProperty.call(node.frontmatter, 'slug')) slug = `${_.kebabCase(node.frontmatter.slug)}`;
+			if (hasOwnProperty.call(node.frontmatter, 'permalink')) slug = `${node.frontmatter.permalink}`;
 
 			if (hasOwnProperty.call(node.frontmatter, 'date')) {
 				date = moment(node.frontmatter.date, config.site.dateFromFormat);
@@ -82,11 +82,15 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 				date = date.toISOString();
 			}
 		} else if (parsedFilePath.name !== 'index' && parsedFilePath.dir !== '') {
-			slug = `/${parsedFilePath.dir}/${parsedFilePath.name}/`;
+			slug = `${parsedFilePath.dir}/${parsedFilePath.name}/`;
 		} else if (parsedFilePath.dir === '') {
-			slug = `/${parsedFilePath.name}/`;
+			slug = `${parsedFilePath.name}/`;
 		} else {
-			slug = `/${parsedFilePath.dir}/`;
+			slug = `${parsedFilePath.dir}/`;
+		}
+
+		if(slug[0] !== '/'){
+			slug = `/${slug}`;
 		}
 
 		createNodeField({
