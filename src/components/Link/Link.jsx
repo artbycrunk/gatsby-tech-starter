@@ -15,12 +15,22 @@ const Link = ({ children, to, className, activeClassName, ...other }) => {
 
     // Use Gatsby Link for internal links, and <a> for others
     if (internal && !file) {
+        // console.log(`Link internal : ${to} : ${className}`);
+        if (activeClassName) {
+            return (
+              <GatsbyLink to={to} getProps={isPartiallyActive} {...other}>
+                {children}
+              </GatsbyLink>
+            );
+        }
         return (
-          <GatsbyLink to={to} getProps={isPartiallyActive} {...other}>
+          <GatsbyLink to={to} className={className} {...other}>
             {children}
           </GatsbyLink>
         );
+
     }
+    // console.log(`Link external : ${to} : ${className}`);
     return (
       <a href={to} className={className} {...other}>
         {children}
