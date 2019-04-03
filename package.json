@@ -42,7 +42,6 @@
 		"gatsby-transformer-remark": "2.3.8",
 		"gatsby-transformer-sharp": "2.1.17",
 		"lodash": "^4.17.11",
-		"mdx-utils": "0.0.2",
 		"moment": "^2.24.0",
 		"node-sass": "^4.11.0",
 		"prism-react-renderer": "^0.1.6",
