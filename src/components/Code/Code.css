@@ -1,0 +1,90 @@
+
+code{
+    font-family: monospace,monospace;
+    font-size: 1em;
+}
+
+pre {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 0.85rem;
+    line-height: 1.42;
+    background: hsla(0,0%,0%,0.04);
+    border-radius: 3px;
+    overflow: auto;
+    word-wrap: normal;
+    padding: 1.5rem;
+}
+
+.gatsby-highlight{
+    background-color: rgb(30, 30, 30);
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+    overflow: auto;
+    padding: 2rem;
+    position: relative;
+    -webkit-overflow-scrolling: touch;
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+}
+
+.gatsby-code-title {
+    position: absolute;
+    width:100%;
+    background-color: rgb(10, 10,10);
+    border-bottom: 1px solid #111;
+    color: #fdfaf6;
+    padding: 0.5rem 2rem 0.3rem;
+    font-size: 74%;
+    text-align: left;
+    margin-left: -2rem;
+    margin-right: -1.5rem;
+    top: 0;
+}
+
+.gatsby-code-lineno {
+    display: inline-block;
+	width: 2em;
+	user-select: none;
+	opacity: 0.3;
+    text-align: right;
+    padding-right:15px;
+}
+
+.gatsby-highlight pre[class*='language-']{
+    background-color: transparent;
+    border: 0;
+    float: left;
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    min-width: 100%;
+    overflow: initial;
+}
+
+.gatsby-highlight pre[class*='language-']::before{
+    background: #ddd;
+    border-radius: 0 0 4px 4px;
+    color: hsla(270,17.119554496%,0%,0.92);
+    font-size: 0.75rem;
+    font-family: SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;
+    letter-spacing: 0.075em;
+    line-height: 1;
+    padding: 0.25rem 0.5rem;
+    position: absolute;
+    right: 1.5rem;
+    text-align: right;
+    text-transform: uppercase;
+    top: 0;
+}
+
+.gatsby-highlight pre[class*='language-actionscript']::before{
+    content: 'actionscript';
+    background: #f7df1e;
+}
