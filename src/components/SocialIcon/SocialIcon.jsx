@@ -63,7 +63,7 @@ class SocialIcon extends Component {
 		}
 
 		return (
-  <Link className="social_icon" target="_blank" rel="noopener noreferrer" to={linkTo}>
+  <Link className="social_icon" aria-label={network} target="_blank" rel="noopener noreferrer" to={linkTo}>
     <div>
       <svg className="social-svg" viewBox={viewbox} width={size} height={size}>
         <g>
