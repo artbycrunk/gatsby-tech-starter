@@ -16,7 +16,7 @@ export default class MainLayout extends React.Component {
 		const { favicon } = config.site;
 		return (
   <div>
-    <Helmet>
+    <Helmet htmlAttributes={{ lang: 'en' }}>
       <meta name="description" content={config.site.description} />
       <link rel="icon" type={favicon.type} href={favicon.href} sizes={favicon.sizes} />
       <meta name="theme-color" content={config.site.themeColor} />
