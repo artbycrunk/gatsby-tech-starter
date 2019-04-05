@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
 import {
 	FacebookShareButton,
-	GooglePlusShareButton,
 	LinkedinShareButton,
 	TwitterShareButton,
 	TelegramShareButton,
 	RedditShareButton,
 	FacebookShareCount,
-	GooglePlusShareCount,
 	LinkedinShareCount,
 	RedditShareCount,
 	FacebookIcon,
 	TwitterIcon,
 	TelegramIcon,
-	GooglePlusIcon,
 	LinkedinIcon,
 	RedditIcon
 } from 'react-share';
@@ -31,26 +28,35 @@ class SocialLinks extends Component {
 
 		return (
   <div className="social-links">
-    <RedditShareButton url={url} title={post.title}>
+    <RedditShareButton url={url} title={post.title} additionalProps={{ 'aria-label': 'RedditShareButton' }}>
       <RedditIcon round size={iconSize} />
       <RedditShareCount url={url}>{count => renderShareCount(count)}</RedditShareCount>
     </RedditShareButton>
-    <TwitterShareButton url={url} title={post.title}>
+    <TwitterShareButton
+      url={url}
+      title={post.title}
+      additionalProps={{ 'aria-label': 'TwitterShareButton' }}
+    >
       <TwitterIcon round size={iconSize} />
     </TwitterShareButton>
-    <GooglePlusShareButton url={url}>
-      <GooglePlusIcon round size={iconSize} />
-      <GooglePlusShareCount url={url}>{count => renderShareCount(count)}</GooglePlusShareCount>
-    </GooglePlusShareButton>
-    <FacebookShareButton url={url} quote={postNode.excerpt}>
+    <FacebookShareButton
+      url={url}
+      quote={postNode.excerpt}
+      additionalProps={{ 'aria-label': 'FacebookShareButton' }}
+    >
       <FacebookIcon round size={iconSize} />
       <FacebookShareCount url={url}>{count => renderShareCount(count)}</FacebookShareCount>
     </FacebookShareButton>
-    <LinkedinShareButton url={url} title={post.title} description={postNode.excerpt}>
+    <LinkedinShareButton
+      url={url}
+      title={post.title}
+      description={postNode.excerpt}
+      additionalProps={{ 'aria-label': 'LinkedinShareButton' }}
+    >
       <LinkedinIcon round size={iconSize} />
       <LinkedinShareCount url={url}>{count => renderShareCount(count)}</LinkedinShareCount>
     </LinkedinShareButton>
-    <TelegramShareButton url={url}>
+    <TelegramShareButton url={url} additionalProps={{ 'aria-label': 'TelegramShareButton' }}>
       <TelegramIcon round size={iconSize} />
     </TelegramShareButton>
   </div>
