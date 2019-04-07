@@ -1,4 +1,8 @@
 const path = require('path');
+const fs = require('fs');
+const zlib = require('zlib');
+const iltorb = require('iltorb');
+const glob = require('glob');
 const _ = require('lodash');
 const moment = require('moment');
 const common = require('./src/tokens/common');
@@ -89,7 +93,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 			slug = `${parsedFilePath.dir}/`;
 		}
 
-		if(slug[0] !== '/'){
+		if (slug[0] !== '/') {
 			slug = `/${slug}`;
 		}
 
@@ -135,6 +139,32 @@ exports.onCreateWebpackConfig = ({ actions }) => {
 				$components: path.resolve(__dirname, 'src/components')
 			}
 		}
+	});
+};
+
+exports.onPostBuild = () => {
+	console.log('Running onPostBuild..');
+	return new Promise((resolve, reject) => {
+		try {
+			if (config.site.gzip) {
+				console.log('Running onPostBuild : GZIP');
+				const publicPath = path.resolve('./public');
+				console.log(`Running onPostBuild.. ${publicPath}`);
+				const gzippable = glob.sync(`${publicPath}/**/?(*.html|*.js|*.css|*.svg)`);
+				gzippable.forEach(file => {
+					const content = fs.readFileSync(file);
+					const zipped = zlib.gzipSync(content);
+					fs.writeFileSync(`${file}.gz`, zipped);
+
+					const brotlied = iltorb.compressSync(content);
+					fs.writeFileSync(`${file}.br`, brotlied);
+				});
+			}
+		} catch (e) {
+			reject(new Error('onPostBuild: Could not compress the files'));
+		}
+
+		resolve();
 	});
 };
 

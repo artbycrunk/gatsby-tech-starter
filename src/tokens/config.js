@@ -22,7 +22,8 @@ module.exports = {
 		robotsPolicy: {
 			userAgent: '*',
 			disallow: ['*/tags/', '*/categories/']
-		}
+		},
+		gzip: false
 	},
 	user: {
 		name: 'Starter User', // Username to display in the author segment.
