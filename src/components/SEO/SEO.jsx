@@ -16,6 +16,7 @@ class SEO extends Component {
 			const postMeta = postNode.frontmatter;
 			({ title } = postMeta);
 			description = postMeta.description ? postMeta.description : postNode.excerpt;
+			if (description === '') ({ description } = config.site);
 			if (Object.prototype.hasOwnProperty.call(postMeta, 'cover')) {
 				image = postMeta.cover;
 			}
