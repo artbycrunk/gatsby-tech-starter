@@ -85,7 +85,7 @@ class PhotoGallery extends Component {
                   <div
                     className="image_link"
                     role="link"
-                    tabIndex={index}
+                    tabIndex="0"
                     onClick={e => this.openLightbox(index, e)}
                     onKeyDown={e => this.onKeyDown(index, e)}
                   >
