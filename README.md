@@ -29,7 +29,7 @@ If you are interested in a foundation for building ultra-fast websites, you can 
   - Description
   - Links
   - Follow Me button
-- Posts in Markdown
+- Posts in Markdown and MDX
   - Code syntax highlighting
   - Embed YouTube videos
   - Embed Tweets
