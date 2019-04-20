@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from '../Link/Link';
+import PostTags from '../PostTags/PostTags';
 import './PostListing.css';
 import common from '../../tokens/common';
 
@@ -40,16 +41,12 @@ class PostListing extends React.Component {
 			(
   <div className="post-grid-container">
     {postList.map(post => [
-      <div key={`${post.path}-category`} className="post-grid-item align-right">
-        <Link className="category_link" to={post.category}>
-          {common.capitalizeFirstLetter(post.category)}
-        </Link>
-      </div>,
       <div key={post.path} className="post-grid-item">
-        <Link className="contentLink" to={post.path}>
+        <PostTags category={post.category} tags={post.tags} from="PostListing" />
+        <Link className="listingLink" to={post.path}>
           {post.title}
         </Link>
-        <div>{post.excerpt}</div>
+        {post.excerpt && <div className="listingExcerpt">{post.excerpt}</div>}
       </div>
 					])}
   </div>
