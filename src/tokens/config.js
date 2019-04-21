@@ -14,11 +14,6 @@ module.exports = {
 		dateFromFormat: 'YYYY-MM-DD', // Date format used in the frontmatter.
 		dateFormat: 'DD/MM/YYYY', // Date format for display.
 		postDefaultCategoryID: 'Tech', // Default category for posts.
-		favicon: {
-			type: 'image/png',
-			href: '/favicon.png',
-			sizes: '16x16'
-		},
 		robotsPolicy: {
 			userAgent: '*',
 			disallow: ['*/tags/', '*/categories/']
@@ -60,6 +55,12 @@ module.exports = {
 		main: './static/icon.png',
 
 		// Auto generated from gatsby-plugin-manifest
+		'logo-16': {
+			// used as favicon
+			src: '/logos/logo-16x16.png',
+			sizes: '16x16',
+			type: 'image/png'
+		},
 		'logo-144': {
 			src: '/logos/logo-144x144.png',
 			sizes: '144x144',

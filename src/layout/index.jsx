@@ -13,12 +13,16 @@ import 'typeface-pt-sans';
 export default class MainLayout extends React.Component {
 	render() {
 		const { children } = this.props;
-		const { favicon } = config.site;
 		return (
   <div>
     <Helmet htmlAttributes={{ lang: 'en' }}>
       <meta name="description" content={config.site.description} />
-      <link rel="icon" type={favicon.type} href={favicon.href} sizes={favicon.sizes} />
+      <link
+        rel="icon"
+        type={config.icons['logo-16'].type}
+        href={config.icons['logo-16'].src}
+        sizes={config.icons['logo-16'].sizes}
+      />
       <meta name="theme-color" content={config.site.themeColor} />
     </Helmet>
     <Sidebar />
