@@ -25,7 +25,7 @@ export default class PostTemplate extends React.Component {
 			post.category_id = config.postDefaultCategoryID;
 		}
 		return (
-  <Layout>
+  <Layout hideSidebar={post.hide_sidebar}>
     <div>
       <Helmet>
         <title>{`${post.title} | ${config.siteTitle}`}</title>
@@ -60,6 +60,7 @@ export const pageQuery = graphql`
 				show_date
 				page_width
 				excerpt
+				hide_sidebar
 				gallery {
 					image_path {
 						...ImageSharpCustom

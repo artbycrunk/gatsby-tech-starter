@@ -12,7 +12,12 @@ import 'typeface-pt-sans';
 
 export default class MainLayout extends React.Component {
 	render() {
-		const { children } = this.props;
+		const { children, hideSidebar } = this.props;
+		let needSidebar = true
+		if (hideSidebar === true){
+			needSidebar = false
+		}
+
 		return (
   <div>
     <Helmet htmlAttributes={{ lang: 'en' }}>
@@ -25,7 +30,7 @@ export default class MainLayout extends React.Component {
       />
       <meta name="theme-color" content={config.site.themeColor} />
     </Helmet>
-    <Sidebar />
+    {needSidebar === true && <Sidebar />}
     <MDXProvider components={mdxComponents}>{children}</MDXProvider>
   </div>
 		);
