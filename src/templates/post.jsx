@@ -35,7 +35,6 @@ export default class PostTemplate extends React.Component {
         <h1>{post.title}</h1>
         <h2>{post.date}</h2>
         <MDXRenderer>{mdx.code.body}</MDXRenderer>
-        {/* <div dangerouslySetInnerHTML={{ __html: postNode.html }} /> */}
         <div className="post-meta">
           <PostTags tags={post.tags} />
           <SocialLinks postPath={slug} postNode={mdx} />
@@ -60,6 +59,7 @@ export const pageQuery = graphql`
 				tags
 				show_date
 				page_width
+				excerpt
 				gallery {
 					image_path {
 						...ImageSharpCustom
