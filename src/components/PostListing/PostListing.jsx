@@ -3,6 +3,7 @@ import Link from '../Link/Link';
 import PostTags from '../PostTags/PostTags';
 import './PostListing.css';
 import common from '../../tokens/common';
+import config from '../../tokens/config';
 
 class PostListing extends React.Component {
 	getPostList() {
@@ -11,6 +12,8 @@ class PostListing extends React.Component {
 		const postList = [];
 
 		postEdges.forEach(postEdge => {
+			if (config.site.skip_drafts && postEdge.node.frontmatter.draft === true) return;
+
 			postList.push({
 				path: postEdge.node.fields.slug,
 				tags: postEdge.node.frontmatter.tags,

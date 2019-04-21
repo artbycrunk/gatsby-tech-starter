@@ -183,6 +183,7 @@ exports.createPages = ({ graphql, actions }) => {
 										category
 										permalink
 										page_type
+										draft
 									}
 									fields {
 										title
@@ -210,7 +211,12 @@ exports.createPages = ({ graphql, actions }) => {
 				edges.forEach(({ node }, i) => {
 					const prev = i === 0 ? null : edges[i - 1].node;
 					const next = i === edges.length - 1 ? null : edges[i + 1].node;
-					const { tags, category, permalink, page_type } = node.frontmatter;
+					const { tags, category, permalink, page_type, draft } = node.frontmatter;
+
+					if (config.site.skip_drafts && draft === true){
+						console.log(`DRAFT : ${node.fields.slug}`);
+						return;
+					}
 
 					if (tags) {
 						tags.forEach(tag => {

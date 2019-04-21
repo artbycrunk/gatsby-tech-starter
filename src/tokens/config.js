@@ -18,7 +18,8 @@ module.exports = {
 			userAgent: '*',
 			disallow: ['*/tags/', '*/categories/']
 		},
-		gzip: false
+		gzip: false,
+		skip_drafts: true
 	},
 	user: {
 		name: 'Starter User', // Username to display in the author segment.
