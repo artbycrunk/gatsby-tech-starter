@@ -39,15 +39,9 @@ export default class MainLayout extends React.Component {
 
 export const ImageSharpCustom = graphql`
 	fragment ImageSharpCustom on File {
-		publicURL
 		childImageSharp {
 			fluid(maxWidth: 1200) {
-				srcSet
 				...GatsbyImageSharpFluid_withWebp
-			}
-			sizes(maxWidth: 1200) {
-				srcSet
-				...GatsbyImageSharpSizes_withWebp
 			}
 		}
 	}
