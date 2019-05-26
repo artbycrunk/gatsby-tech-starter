@@ -1,7 +1,6 @@
 const fn = require('./functions');
-const common = require('./src/tokens/common');
-
 // eslint-disable-next-line
+const common = require(fn.withThemePath('./src/tokens/common'));
 const config = require(fn.withThemePath('./src/tokens/config'));
 
 module.exports = {
@@ -87,7 +86,12 @@ module.exports = {
 		'gatsby-transformer-sharp',
 		'gatsby-plugin-catch-links',
 		'gatsby-plugin-twitter',
-		'gatsby-plugin-sitemap',
+		{
+			resolve: 'gatsby-plugin-sitemap',
+			options: {
+				xslUrl: 'sitemap.xsl'
+			}
+		},
 		{
 			resolve: 'gatsby-plugin-robots-txt',
 			options: {
