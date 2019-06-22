@@ -166,7 +166,7 @@ exports.onPostBuild = () => {
 };
 
 exports.createPages = ({ graphql, actions }) => {
-	const { createPage } = actions;
+	const { createPage, createRedirect } = actions;
 
 	return new Promise((resolve, reject) => {
 		const postPage = resolveTemplate('post');
@@ -282,6 +282,15 @@ exports.createPages = ({ graphql, actions }) => {
 						});
 					});
 				}
+
+				config.redirects.forEach(({ f, t }) => {
+					createRedirect({
+						fromPath: f,
+						isPermanent: true,
+						redirectInBrowser: true,
+						toPath: t,
+					})
+				})
 			})
 		);
 	});

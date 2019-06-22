@@ -77,5 +77,6 @@ module.exports = {
 			sizes: '192x192',
 			type: 'image/png'
 		}
-	}
+	},
+	redirects: []
 };
