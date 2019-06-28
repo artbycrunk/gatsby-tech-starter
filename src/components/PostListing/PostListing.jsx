@@ -21,7 +21,7 @@ class PostListing extends React.Component {
 				date: postEdge.node.fields.date,
 				excerpt: postEdge.node.frontmatter.excerpt || postEdge.node.excerpt,
 				timeToRead: postEdge.node.timeToRead,
-				category: postEdge.node.frontmatter.category || 'Others'
+				category: postEdge.node.frontmatter.category || 'others'
 			});
 		});
 
