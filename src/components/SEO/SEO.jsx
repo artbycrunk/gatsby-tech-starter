@@ -5,7 +5,7 @@ import common from '../../tokens/common';
 
 class SEO extends Component {
 	render() {
-		const { postNode, postPath, postSEO } = this.props;
+		const { postNode, postPath, category, postSEO } = this.props;
 		let title;
 		let description;
 		let postURL;
@@ -45,18 +45,26 @@ class SEO extends Component {
 						{
 							'@type': 'ListItem',
 							position: 1,
-							item: {
-								'@id': postURL,
-								name: title,
-								image
-							}
+							name: common.capitalizeFirstLetter(category || 'Others'),
+							item: common.postURL(category)
+						},
+						{
+							'@type': 'ListItem',
+							position: 2,
+							name: title,
+							item: postURL
 						}
 					]
-				},
+				}
+			)
+			// TODO add  "datePublished": "2009-11-05"
+			// TODO add  "dateModified": "2009-11-05"
+			// Verify with https://search.google.com/structured-data/testing-tool/u/0/#url=https%3A%2F%2Fwww.saviof.com%2Farticles%2Faugmented-reality-coding
+			schemaOrgJSONLD.push(	
 				{
 					'@context': 'http://schema.org',
-					'@type': 'BlogPosting',
-					url: blogURL,
+					'@type': 'Article',
+					url: postURL,
 					name: title,
 					alternateName: config.site.titleAlt ? config.site.titleAlt : '',
 					headline: title,
@@ -64,6 +72,12 @@ class SEO extends Component {
 						'@type': 'ImageObject',
 						url: image
 					},
+					"author": {
+						"@type":"Person",
+						"name":config.user.name
+					},
+					publisher:config.user.name,
+					mainEntityOfPage: postURL,
 					description
 				}
 			);
