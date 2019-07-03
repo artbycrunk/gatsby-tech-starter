@@ -37,6 +37,8 @@ class SEO extends Component {
 			}
 		];
 		if (postSEO) {
+			const { date, mod_date } = postNode.fields;
+			
 			schemaOrgJSONLD.push(
 				{
 					'@context': 'http://schema.org',
@@ -78,7 +80,9 @@ class SEO extends Component {
 					},
 					publisher:config.user.name,
 					mainEntityOfPage: postURL,
-					description
+					description,
+					datePublished:date,
+					dateModified:mod_date
 				}
 			);
 		}

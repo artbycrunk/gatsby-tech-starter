@@ -69,6 +69,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 	const { createNodeField } = actions;
 	let slug;
 	let date = '';
+	let modDate = '';
 
 	if (node.internal.type === `Mdx`) {
 		const fileNode = getNode(node.parent);
@@ -79,12 +80,23 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 			if (hasOwnProperty.call(node.frontmatter, 'slug')) slug = `${_.kebabCase(node.frontmatter.slug)}`;
 			if (hasOwnProperty.call(node.frontmatter, 'permalink')) slug = `${node.frontmatter.permalink}`;
 
+			
 			if (hasOwnProperty.call(node.frontmatter, 'date')) {
-				date = moment(node.frontmatter.date, config.site.dateFromFormat);
+				date = moment(`${node.frontmatter.date}`, config.site.dateFromFormat);
 				if (!date.isValid) console.warn(`WARNING: Invalid date.`, node.frontmatter);
 
 				date = date.toISOString();
 			}
+
+			if (hasOwnProperty.call(node.frontmatter, 'mod_date')) {
+				modDate = moment(`${node.frontmatter.mod_date}`, config.site.dateFromFormat);
+				if (!date.isValid) console.warn(`WARNING: Invalid date.`, node.frontmatter);
+
+				modDate = modDate.toISOString();
+			}else{
+				modDate = date;
+			}
+
 		} else if (parsedFilePath.name !== 'index' && parsedFilePath.dir !== '') {
 			slug = `${parsedFilePath.dir}/${parsedFilePath.name}/`;
 		} else if (parsedFilePath.dir === '') {
@@ -119,6 +131,12 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 			name: 'date',
 			node,
 			value: date
+		});
+
+		createNodeField({
+			name: 'mod_date',
+			node,
+			value: modDate
 		});
 	}
 };
