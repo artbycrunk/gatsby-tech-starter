@@ -77,6 +77,13 @@ module.exports = {
 			}
 		},
 		{
+			resolve: 'gatsby-plugin-google-tagmanager',
+			options: {
+				id: config.service.googleTagManagerID,
+				includeInDevelopment: true,
+			}
+		},
+		{
 			resolve: 'gatsby-plugin-nprogress',
 			options: {
 				color: config.site.themeColor
