@@ -44,16 +44,16 @@ module.exports = {
 			resolve: `gatsby-plugin-sass`
 		},
 		{
-			resolve: `gatsby-mdx`,
+			resolve: `gatsby-plugin-mdx`,
 			options: {
 				extensions: ['.mdx', '.md'],
+				plugins: [ `gatsby-remark-images` ],
 				gatsbyRemarkPlugins: [
 					{
 						resolve: 'gatsby-remark-images',
 						options: {
 							maxWidth: 690,
 							withWebp: true,
-							tracedSVG: true
 						}
 					},
 					{
@@ -169,9 +169,6 @@ module.exports = {
                 edges {
                   node {
                     excerpt
-                    code {
-											scope
-										}
                     timeToRead
                     fields {
                       slug
@@ -188,7 +185,8 @@ module.exports = {
               }
             }
           `,
-						output: config.site.rss
+						output: config.site.rss,
+						title: "saviof.com RSS Feed"
 					}
 				]
 			}

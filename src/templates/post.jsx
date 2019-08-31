@@ -1,7 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import { graphql } from 'gatsby';
-import MDXRenderer from 'gatsby-mdx/mdx-renderer';
+import { MDXRenderer } from "gatsby-plugin-mdx";
 import Layout from '../layout';
 import Disqus from '../components/Disqus/Disqus';
 import PostTags from '../components/PostTags/PostTags';
@@ -34,7 +34,7 @@ export default class PostTemplate extends React.Component {
       <div>
         <h1>{post.title}</h1>
         <h2>{post.date}</h2>
-        <MDXRenderer>{mdx.code.body}</MDXRenderer>
+        <MDXRenderer>{mdx.body}</MDXRenderer>
         <div className="post-meta">
           <PostTags tags={post.tags} />
           <SocialLinks postPath={slug} postNode={mdx} />
@@ -73,9 +73,7 @@ export const pageQuery = graphql`
 				slug
 				date
 			}
-			code {
-				body
-			}
+			body
 		}
 	}
 `;

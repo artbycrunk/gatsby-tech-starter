@@ -1,6 +1,5 @@
 import React from 'react';
 import Title from './Title';
-import Subtitle from './Subtitle';
 import Paragraph from './Paragraph';
 import Link from '../Link/Link';
 import Code from '../Code/Code';
@@ -12,13 +11,11 @@ function preToCodeBlock(preProps) {
 		// MDXTag props
 		preProps.children.props &&
 		// if MDXTag is going to render a <code>
-		preProps.children.props.name === 'code'
+		preProps.children.props.mdxType === 'code'
 	) {
 		// we have a <pre><code> situation
-		const {
-			children: codeString,
-			props: { className, ...props }
-		} = preProps.children.props;
+		const {children: codeString, className, ...props
+			} = preProps.children.props;
 
 		let language;
 		let title;
@@ -40,7 +37,6 @@ function preToCodeBlock(preProps) {
 
 export default {
 	h1: props => <Title {...props} />,
-	// h2: props => <Subtitle {...props} />,
 	p: props => <Paragraph {...props} />,
 	a: props => <Link className="contentLink" {...props} />,
 	pre: props => {

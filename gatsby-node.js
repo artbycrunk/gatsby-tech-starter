@@ -207,9 +207,6 @@ exports.createPages = ({ graphql, actions }) => {
 										title
 										slug
 									}
-									code {
-										scope
-									}
 								}
 							}
 						}
