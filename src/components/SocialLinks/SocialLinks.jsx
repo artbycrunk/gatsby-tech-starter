@@ -6,7 +6,6 @@ import {
 	TelegramShareButton,
 	RedditShareButton,
 	FacebookShareCount,
-	LinkedinShareCount,
 	RedditShareCount,
 	FacebookIcon,
 	TwitterIcon,
@@ -54,7 +53,6 @@ class SocialLinks extends Component {
       additionalProps={{ 'aria-label': 'LinkedinShareButton' }}
     >
       <LinkedinIcon round size={iconSize} />
-      <LinkedinShareCount url={url}>{count => renderShareCount(count)}</LinkedinShareCount>
     </LinkedinShareButton>
     <TelegramShareButton url={url} additionalProps={{ 'aria-label': 'TelegramShareButton' }}>
       <TelegramIcon round size={iconSize} />
