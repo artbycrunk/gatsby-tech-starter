@@ -61,7 +61,9 @@ module.exports = {
 					},
 					{
 						resolve: `gatsby-remark-autolink-headers`,
-						options: {}
+						options: {
+							className: `autolink-header`
+						}
 					},
 					{
 						resolve: 'gatsby-remark-copy-linked-files',
