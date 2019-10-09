@@ -1,0 +1,50 @@
+.notfound-404{
+    float:left;
+    box-sizing: border-box;
+}
+
+.notfound-row:after, .notfound-row:before {
+    display: table;
+    content: " ";
+}
+
+.notfound-row:after{
+    clear:both;
+}
+
+.notfound-404{
+    font-size: 200px!important;
+    width: 41.66666667%!important;
+    margin:0px;
+}
+
+.notfound-text p{
+    margin:0;
+    color: rgba(0,0,0,.7)!important;
+    fill: rgba(0,0,0,.7)!important;
+}
+
+.notfound-msg{
+    margin:0px;
+    font-size: 77px!important;
+    color: rgba(0,0,0,.3)!important;
+    fill: rgba(0,0,0,.3)!important;
+    /* width: 58.33333333%!important; */
+    padding-top: 30px!important;
+    padding-left: 0!important;
+}
+
+@media (max-width: 1400px){
+    .notfound-404{
+        font-size: 130px!important;
+        width: 100.66666667%!important;
+    }
+
+    .notfound-msg{
+        font-size: 57px!important;
+    }
+
+    .notfound-text{
+        margin-top:20px;
+    }
+}
