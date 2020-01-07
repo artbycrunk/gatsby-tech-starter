@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './PhotoGallery.css';
 import Img from 'gatsby-image';
-import Lightbox from 'react-images';
+import Carousel, { Modal, ModalGateway } from 'react-images';
 
 const path = require('path');
 
@@ -9,13 +9,15 @@ class PhotoGallery extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            lightbox: false,
+            modalIsOpen: false,
             currentImage: 0,
             imageSizes: props.images.map(image =>
-                Object.assign({
+                (
+                  {
                     src: image.image_path.childImageSharp.fluid.src,
                     srcSet: image.image_path.childImageSharp.fluid.srcSet
-                })
+                  }
+                )
             )
         };
     }
@@ -54,34 +56,24 @@ class PhotoGallery extends Component {
         this.setState();
     }
 
-    gotoPrevLightboxImage() {
-        const { currentImage } = this.state;
-        this.setState({ currentImage: currentImage - 1 });
-    }
-
-    gotoNextLightboxImage() {
-        const { currentImage } = this.state;
-        this.setState({ currentImage: currentImage + 1 });
-    }
-
     openLightbox(image, event) {
         event.preventDefault();
-        this.setState({ lightbox: true, currentImage: image });
+        this.setState({ modalIsOpen: true, currentImage: image });
     }
 
     closeLightbox() {
-        this.setState({ lightbox: false });
+        this.setState({ modalIsOpen: false });
     }
 
     render() {
         const { images, showTitle } = this.props;
-        const { imageSizes, currentImage, lightbox } = this.state;
+        const { imageSizes, currentImage, modalIsOpen } = this.state;
 
         return (
           <div className="photo-gallery">
             <div className="row">
               {images.map((currImage, index) => (
-                <div key={`image-${index}`}>
+                <div key={currImage.image_path.childImageSharp.fluid.src}>
                   <div
                     className="image_link"
                     role="link"
@@ -100,17 +92,24 @@ class PhotoGallery extends Component {
                 </div>
                     ))}
             </div>
-            <Lightbox
-              backdropClosesModal
-              images={imageSizes}
-              currentImage={currentImage}
-              isOpen={lightbox}
-              onClickPrev={() => this.gotoPrevLightboxImage()}
-              onClickNext={() => this.gotoNextLightboxImage()}
-              onClose={() => this.closeLightbox()}
-            />
+            
+            <ModalGateway>
+              {modalIsOpen ? (
+                <Modal 
+                  onClose={() => this.closeLightbox()} 
+                  closeOnEsc
+                  closeOnBackdropClick
+                >
+                  <Carousel
+                    views={imageSizes}
+                    currentIndex={currentImage}
+                  />
+                </Modal>
+            ) : null}
+            </ModalGateway>
           </div>
         );
+
     }
 }
 
