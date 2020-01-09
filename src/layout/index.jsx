@@ -1,5 +1,5 @@
 import React from 'react';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet-async'
 import { MDXProvider } from '@mdx-js/react';
 import { graphql } from 'gatsby';
 import config from '../tokens/config';
