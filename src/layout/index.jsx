@@ -20,7 +20,7 @@ export default class MainLayout extends React.Component {
 
 		return (
   <div>
-    <Helmet htmlAttributes={{ lang: 'en' }}>
+    <Helmet htmlAttributes={{ lang: 'en' }} defer={false}>
       <meta name="description" content={config.site.description} />
       <link
         rel="icon"

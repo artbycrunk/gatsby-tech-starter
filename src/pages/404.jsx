@@ -14,7 +14,7 @@ class Error404 extends React.Component {
 		return (
   <Layout>
     <div className="content container index-container">
-      <Helmet title={`Page not found | ${config.site.title}`} />
+      <Helmet title={`Page not found | ${config.site.title}`} defer={false} />
       <div className="notfound-row">
         <h1 className="notfound-404">404</h1>
         <h2 className="notfound-msg">I couldn’t find this page.</h2>

@@ -13,7 +13,7 @@ class Index extends React.Component {
 		return (
   <Layout>
     <div className="content container index-container">
-      <Helmet title={config.site.title} />
+      <Helmet title={config.site.title} defer={false} /> 
       <SEO />
       <PostListing postEdges={postEdges} />
     </div>

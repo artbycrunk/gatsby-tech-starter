@@ -15,7 +15,7 @@ export default class CategoryTemplate extends React.Component {
 		return (
   <Layout>
     <div className="content container category-container">
-      <Helmet title={`${common.capitalizeFirstLetter(category)} | ${config.site.title}`} />
+      <Helmet title={`${common.capitalizeFirstLetter(category)} | ${config.site.title}`} defer={false} />
       <PostListing postEdges={edges} category={category} />
     </div>
   </Layout>

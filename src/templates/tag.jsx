@@ -14,7 +14,7 @@ export default class TagTemplate extends React.Component {
 		return (
   <Layout>
     <div className="content container tag-container">
-      <Helmet title={`${common.capitalizeFirstLetter(tag)} | ${config.site.title}`} />
+      <Helmet title={`${common.capitalizeFirstLetter(tag)} | ${config.site.title}`} defer={false} />
       <PostListing postEdges={edges} tag={tag} />
     </div>
   </Layout>

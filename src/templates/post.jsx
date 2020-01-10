@@ -27,7 +27,7 @@ export default class PostTemplate extends React.Component {
 		return (
   <Layout hideSidebar={post.hide_sidebar}>
     <div>
-      <Helmet>
+      <Helmet defer={false}>
         <title>{`${post.title} | ${config.siteTitle}`}</title>
       </Helmet>
       <SEO postPath={slug} postNode={mdx} postSEO />

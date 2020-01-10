@@ -87,7 +87,7 @@ class SEO extends Component {
 			);
 		}
 		return (
-  <Helmet>
+  <Helmet defer={false}>
     {/* General tags */}
     <meta name="description" content={description} />
     <meta name="image" content={image} />
