@@ -27,35 +27,32 @@ class SocialLinks extends Component {
 
 		return (
   <div className="social-links">
-    <RedditShareButton url={url} title={post.title} additionalProps={{ 'aria-label': 'RedditShareButton' }}>
-      <RedditIcon round size={iconSize} />
+    <RedditShareButton url={url} title={post.title}>
+      <RedditIcon round size={iconSize} aria-label='RedditShareButton' />
       <RedditShareCount url={url}>{count => renderShareCount(count)}</RedditShareCount>
     </RedditShareButton>
     <TwitterShareButton
       url={url}
       title={post.title}
-      additionalProps={{ 'aria-label': 'TwitterShareButton' }}
     >
-      <TwitterIcon round size={iconSize} />
+      <TwitterIcon round size={iconSize} aria-label='TwitterShareButton' />
     </TwitterShareButton>
     <FacebookShareButton
       url={url}
       quote={postNode.excerpt}
-      additionalProps={{ 'aria-label': 'FacebookShareButton' }}
     >
-      <FacebookIcon round size={iconSize} />
+      <FacebookIcon round size={iconSize} aria-label='FacebookShareButton' />
       <FacebookShareCount url={url}>{count => renderShareCount(count)}</FacebookShareCount>
     </FacebookShareButton>
     <LinkedinShareButton
       url={url}
       title={post.title}
       description={postNode.excerpt}
-      additionalProps={{ 'aria-label': 'LinkedinShareButton' }}
     >
-      <LinkedinIcon round size={iconSize} />
+      <LinkedinIcon round size={iconSize} aria-label='LinkedinShareButton' />
     </LinkedinShareButton>
-    <TelegramShareButton url={url} additionalProps={{ 'aria-label': 'TelegramShareButton' }}>
-      <TelegramIcon round size={iconSize} />
+    <TelegramShareButton url={url}>
+      <TelegramIcon round size={iconSize} aria-label='TelegramShareButton' />
     </TelegramShareButton>
   </div>
 		);
